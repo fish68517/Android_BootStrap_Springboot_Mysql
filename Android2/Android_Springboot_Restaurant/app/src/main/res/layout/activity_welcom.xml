@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/welcom"
+    android:padding="16dp">
+
+
+    <TextView
+        android:id="@+id/tv_skip"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_button_background"
+        android:gravity="center"
+        android:text="5S"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:text="网上点餐系统"
+        android:textColor="@android:color/white"
+        android:textSize="32sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_skip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="欢迎"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+    <!-- 介绍文字 -->
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:gravity="center"
+        android:text="连锁网上点餐自助点餐系统，\n为您提供最优质的服务"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <!-- 底部按钮 -->
+    <Button
+        android:id="@+id/btn_enter"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/rounded_button_background"
+        android:text="欢迎进入"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
+
+
+</RelativeLayout>

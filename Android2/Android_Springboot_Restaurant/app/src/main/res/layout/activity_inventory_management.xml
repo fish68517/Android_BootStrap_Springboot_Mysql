@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.InventoryManagementActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_inventory"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:title="库存管理与预警"
+        app:titleTextColor="@android:color/white"
+        app:navigationIcon="@drawable/ic_back" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <!-- Store 1 Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:layout_margin="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_store1_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="快乐餐厅北京店 (ID: 1)"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/chart_store1"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="16dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="补货建议:"
+                        android:textStyle="bold"
+                        android:layout_marginTop="16dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_suggestion1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="库存充足，暂不建议补货。" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="供应商信息:"
+                        android:textStyle="bold"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_supplier1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="供应商: 北京生鲜供应中心..." />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Store 2 Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:layout_margin="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+                    <TextView
+                        android:id="@+id/tv_store2_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="快乐餐厅上海店 (ID: 2)"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/chart_store2"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="16dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="补货建议:"
+                        android:textStyle="bold"
+                        android:layout_marginTop="16dp"/>
+                    <TextView
+                        android:id="@+id/tv_suggestion2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="库存充足，暂不建议补货。" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="供应商信息:"
+                        android:textStyle="bold"
+                        android:layout_marginTop="8dp"/>
+                    <TextView
+                        android:id="@+id/tv_supplier2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="供应商: 上海食品集团..." />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Store 3 Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:layout_margin="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+                    <TextView
+                        android:id="@+id/tv_store3_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="快乐餐厅广州店 (ID: 3)"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/chart_store3"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="16dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="补货建议:"
+                        android:textStyle="bold"
+                        android:layout_marginTop="16dp"/>
+                    <TextView
+                        android:id="@+id/tv_suggestion3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="库存充足，暂不建议补货。" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="供应商信息:"
+                        android:textStyle="bold"
+                        android:layout_marginTop="8dp"/>
+                    <TextView
+                        android:id="@+id/tv_supplier3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="供应商: 广州佳肴配送..." />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout> 

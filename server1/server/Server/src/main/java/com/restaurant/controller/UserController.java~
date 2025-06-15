@@ -1,0 +1,48 @@
+package com.restaurant.controller;
+
+import com.restaurant.model.User;
+import com.restaurant.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+    
+    @Autowired
+    private UserService userService;
+
+    @GetMapping
+    public List<User> list() {
+        return userService.list();
+    }
+
+    @GetMapping("/{id}")
+    public User getById(@PathVariable Integer id) {
+        return userService.getById(id);
+    }
+
+    @PostMapping
+    public boolean save(@RequestBody User user) {
+        return userService.save(user);
+    }
+
+    //     @POST("/api/users/login")
+    //    Call<Boolean> login(@Query("username") String username, @Query("password") String password);
+    @PostMapping("/login")
+    public boolean login(@RequestParam("nickname") String nickname,
+                         @RequestParam("password") String password) {
+        return userService.login(nickname, password);
+    }
+
+    @PutMapping
+    public boolean update(@RequestBody User user) {
+        return userService.updateById(user);
+    }
+
+    @DeleteMapping("/{id}")
+    public boolean delete(@PathVariable Integer id) {
+        return userService.removeById(id);
+    }
+} 
