@@ -20,6 +20,12 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
+    @GetMapping
+    public List<Review> getAllReviews() {
+        log.info("查询所有评价");
+        return reviewService.list();
+    }
+
     @PostMapping
     public ResponseEntity<?> createReview(@RequestBody Review review) {
         log.info("创建新评价: {}", review);

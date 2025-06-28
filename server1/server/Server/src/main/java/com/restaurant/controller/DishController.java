@@ -4,6 +4,9 @@ import com.restaurant.mapper.DishMapper;
 import com.restaurant.model.Dish;
 import com.restaurant.service.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -38,8 +41,19 @@ public class DishController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable Integer id) {
-        return dishService.removeById(id);
+    public ResponseEntity<String> delete(@PathVariable Integer id) {
+        try {
+            boolean deleted = dishService.removeById(id);
+            if (deleted) {
+                return ResponseEntity.ok("删除成功");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("未找到该菜品");
+            }
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("该菜品存在关联的订单，无法删除");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("删除失败: " + e.getMessage());
+        }
     }
 
     @GetMapping("/category/{categoryId}")

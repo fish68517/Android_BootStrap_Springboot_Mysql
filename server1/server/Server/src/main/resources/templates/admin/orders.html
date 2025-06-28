@@ -79,7 +79,7 @@
                             <td>${order.orderNo}</td>
                             <td>¥${order.totalAmount.toFixed(2)}</td>
                             <td>${getStatusText(order.status)}</td>
-                            <td>${new Date(order.createdAt).toLocaleString()}</td>
+                            <td>${order.createdAt}</td>
                             <td>
                                 <button class="btn btn-sm btn-info" onclick="viewOrderDetails(${order.orderId})">
                                     <i class="bi bi-eye"></i> 查看
@@ -115,25 +115,38 @@
             const dishes = await Promise.all(dishPromises);
             const dishesMap = new Map(dishes.map(d => [d.dishId, d]));
 
-            let detailsHtml = '<ul class="list-group">';
-            cartItems.forEach(item => {
-                const [dishId, quantity, options] = item.split(/:(.*)/s).slice(1)[0].split(/:(.*)/s);
+            let detailsHtml = '';
+            cartItems.forEach((item, index) => {
+                const match = item.match(/^(\d+):(\d+)(.*)$/);
+                if (!match) return;
+
+                const dishId = match[1];
+                const quantity = match[2];
+                const options = match[3];
+
                 const dish = dishesMap.get(parseInt(dishId));
                 const dishName = dish ? dish.dishName : `菜品ID: ${dishId}`;
+
+                let optionsText = '无';
+                if (options && options.length > 2) { // Greater than 2 to ignore empty "{}"
+                    optionsText = options.replace(/[{}]/g, '').replace(/,/g, ', ');
+                }
                 
                 detailsHtml += `
-                    <li class="list-group-item">
-                        <strong>${dishName}</strong> x ${quantity}
-                        ${options ? `<br><small class="text-muted">${options.replace(/[{}]/g, '').replace(/,/g, ', ')}</small>` : ''}
-                    </li>
+                    <div class="mb-3 border-bottom pb-2">
+                        <h6 class="fw-bold">菜品 ${index + 1}</h6>
+                        <div><strong>名称：</strong> ${dishName}</div>
+                        <div><strong>数量：</strong> ${quantity}</div>
+                        <div><strong>规格：</strong> ${optionsText}</div>
+                    </div>
                 `;
             });
-            detailsHtml += '</ul>';
+            
             if(order.remark) {
                  detailsHtml += `<div class="mt-3"><strong>备注:</strong> ${order.remark}</div>`;
             }
 
-            detailsContainer.innerHTML = detailsHtml;
+            detailsContainer.innerHTML = detailsHtml || '<p>无法解析订单详情。</p>';
             detailsModal.show();
         } catch (error) {
             console.error('Error viewing order details:', error);

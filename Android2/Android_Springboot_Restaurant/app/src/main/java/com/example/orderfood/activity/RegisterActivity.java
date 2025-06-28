@@ -1,6 +1,7 @@
 package com.example.orderfood.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -13,6 +14,7 @@ import com.example.orderfood.RetrofitClient;
 import com.example.orderfood.ApiService;
 import com.example.orderfood.R;
 import com.example.orderfood.model.User;
+import com.example.orderfood.view.CaptchaView;
 
 import java.util.Random;
 
@@ -31,7 +33,10 @@ public class RegisterActivity extends AppCompatActivity {
             "191", "192", "193", "195", "196", "197", "198", "199"};
     private Button registerButton;
 
+    private CaptchaView captchaView; // 新增验证码视图
+
     private EditText emailEditText;
+    private EditText captchaInputEditText;
 
     private RadioGroup registerRadioGroup;
     private RadioButton studentRegisterRadioButton;
@@ -52,14 +57,55 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.register_button);
 
         registerButton = findViewById(R.id.register_button);
+        // 初始化新增的视图
+        captchaInputEditText = findViewById(R.id.captcha_input);
+        captchaView = findViewById(R.id.captcha_view);
 
 
         registerButton.setOnClickListener(v -> {
-            if (true) {
-                handleRegister();
+            if (validateInput()) { // 先进行输入验证
+                handleRegister();  // 验证通过再执行注册
             }
         });
     }
+
+    /**
+     * 验证所有输入，包括验证码
+     * @return true 如果所有输入都有效
+     */
+    private boolean validateInput() {
+        String username = usernameEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
+        String captchaInput = captchaInputEditText.getText().toString().trim();
+
+        if (TextUtils.isEmpty(username)) {
+            Toast.makeText(this, "用户名不能为空", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "密码不能为空", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (TextUtils.isEmpty(captchaInput)) {
+            Toast.makeText(this, "请输入验证码", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        // 核心：验证码校验（忽略大小写）
+        if (!captchaInput.equalsIgnoreCase(captchaView.getCode())) {
+            Toast.makeText(this, "验证码错误", Toast.LENGTH_SHORT).show();
+            // 刷新验证码，让用户重试
+            captchaView.refresh();
+            // 清空用户的输入
+            captchaInputEditText.setText("");
+            return false;
+        }
+
+        return true; // 所有验证通过
+    }
+
 
     private void handleRegister() {
         String username = usernameEditText.getText().toString();
