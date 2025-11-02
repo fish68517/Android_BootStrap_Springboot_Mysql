@@ -1,3 +1,35 @@
+# ------------------- Android 项目 -------------------
+# Android Studio / IDEA
+.idea/
+*.iml
+.gradle/
+local.properties
+/build/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# ------------------- SpringBoot 项目 -------------------
+# 整个 SpringBoot 目录（如果你只想忽略子目录，可改成 SpringBoot/xxx/）
+SpringBoot/
+
+# Maven / Gradle
+target/
+*.log
+*.tmp
+*.bak
+
+# ------------------- 通用忽略 -------------------
+# IDE
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+
 *.iml
 .gradle
 /local.properties
