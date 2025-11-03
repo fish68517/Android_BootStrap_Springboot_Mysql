@@ -23,6 +23,7 @@ public class WithdrawalRequests implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+
     @TableId(value = "request_id", type = IdType.AUTO)
     private Integer requestId;
 
