@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduation.mapper.UsersMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.graduation.entity.Users">
+        <id column="user_id" property="userId" />
+        <result column="username" property="username" />
+        <result column="password_hash" property="passwordHash" />
+        <result column="nickname" property="nickname" />
+        <result column="role" property="role" />
+        <result column="created_at" property="createdAt" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_id, username, password_hash, nickname, role, created_at
+    </sql>
+
+</mapper>

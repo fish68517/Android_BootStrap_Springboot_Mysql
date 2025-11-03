@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduation.mapper.CommentsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.graduation.entity.Comments">
+        <id column="comment_id" property="commentId" />
+        <result column="game_id" property="gameId" />
+        <result column="user_id" property="userId" />
+        <result column="content" property="content" />
+        <result column="status" property="status" />
+        <result column="created_at" property="createdAt" />
+        <result column="reviewed_by_admin_id" property="reviewedByAdminId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        comment_id, game_id, user_id, content, status, created_at, reviewed_by_admin_id
+    </sql>
+
+</mapper>
