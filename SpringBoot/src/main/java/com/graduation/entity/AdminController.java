@@ -1,4 +1,4 @@
-package com.graduation.entity;
+package com.graduation.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +16,11 @@ public class AdminController {
      */
     @GetMapping("/login")
     public String showLoginPage() {
-        // 这将解析为 "src/main/resources/templates/admin/login.html"
         return "admin/login";
     }
 
     /**
      * 处理管理员登录表单提交
-     * (注意：这里只是一个简单的演示，没有集成 Spring Security)
      */
     @PostMapping("/login")
     public String handleLogin(@RequestParam("username") String username,
@@ -30,19 +28,53 @@ public class AdminController {
 
         System.out.println("登录尝试: " + username);
         // 伪代码：实际项目中您需要在这里调用 Service 验证用户名和密码
-        // if (usersService.validateAdmin(username, password)) { ... }
 
         // 假设登录成功，重定向到管理员主页
         return "redirect:/admin/dashboard";
     }
 
     /**
-     * 显示管理员主页（登录成功后）
+     * 1. 显示管理员主页（登录成功后）
      * @return 模板路径 "admin/dashboard"
      */
     @GetMapping("/dashboard")
     public String showDashboard() {
-        // 这将解析为 "src/main/resources/templates/admin/dashboard.html"
         return "admin/dashboard";
+    }
+
+    /**
+     * 2. 【新功能】显示排行榜页面
+     * @return 模板路径 "admin/leaderboard"
+     */
+    @GetMapping("/leaderboard")
+    public String showLeaderboard() {
+        return "admin/leaderboard";
+    }
+
+    /**
+     * 3. 【新功能】显示收藏页面
+     * @return 模板路径 "admin/favorites"
+     */
+    @GetMapping("/favorites")
+    public String showFavorites() {
+        return "admin/favorites";
+    }
+
+    /**
+     * 4. 【新功能】显示点赞页面
+     * @return 模板路径 "admin/likes"
+     */
+    @GetMapping("/likes")
+    public String showLikes() {
+        return "admin/likes";
+    }
+
+    /**
+     * 5. 【新功能】显示个人中心页面
+     * @return 模板路径 "admin/profile"
+     */
+    @GetMapping("/profile")
+    public String showProfile() {
+        return "admin/profile";
     }
 }
