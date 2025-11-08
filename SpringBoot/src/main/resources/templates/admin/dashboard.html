@@ -17,54 +17,26 @@
 
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/admin/dashboard}">
-            <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
-            </div>
+            <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
             <div class="sidebar-brand-text mx-3">管理员后台</div>
         </a>
         <hr class="sidebar-divider my-0">
-
         <li class="nav-item active">
-            <a class="nav-link" th:href="@{/admin/dashboard}">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>主页</span>
-            </a>
+            <a class="nav-link" th:href="@{/admin/dashboard}"><i class="fas fa-fw fa-tachometer-alt"></i><span>主页</span></a>
         </li>
-
         <hr class="sidebar-divider">
-
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/admin/leaderboard}">
-                <i class="fas fa-fw fa-list-ol"></i>
-                <span>排行榜</span>
-            </a>
+            <a class="nav-link" th:href="@{/admin/leaderboard}"><i class="fas fa-fw fa-list-ol"></i><span>排行榜</span></a>
         </li>
-
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/admin/favorites}">
-                <i class="fas fa-fw fa-heart"></i>
-                <span>收藏</span>
-            </a>
+            <a class="nav-link" th:href="@{/admin/favorites}"><i class="fas fa-fw fa-heart"></i><span>收藏</span></a>
         </li>
-
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/admin/likes}">
-                <i class="fas fa-fw fa-thumbs-up"></i>
-                <span>点赞</span>
-            </a>
+            <a class="nav-link" th:href="@{/admin/likes}"><i class="fas fa-fw fa-thumbs-up"></i><span>点赞</span></a>
         </li>
-
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/admin/profile}">
-                <i class="fas fa-fw fa-user"></i>
-                <span>个人中心</span>
-            </a>
+            <a class="nav-link" th:href="@{/admin/profile}"><i class="fas fa-fw fa-user"></i><span>个人中心</span></a>
         </li>
-
-        <hr class="sidebar-divider d-none d-md-block">
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
     </ul>
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
@@ -80,8 +52,98 @@
                 </ul>
             </nav>
             <div class="container-fluid">
-                <h1 class="h3 mb-4 text-gray-800">主页</h1>
-                <p>这是您的管理主页。内容在此处填充。</p>
+
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">主页</h1>
+                    <form th:action="@{/admin/dashboard}" method="get"
+                          class="d-none d-sm-inline-block form-inline ml-auto my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" name="query" class="form-control bg-light border-0 small"
+                                   placeholder="搜索游戏..." th:value="${query}">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div th:if="${!isSearchResult}">
+                    <h5 class="mb-3">游戏 Banner</h5>
+                    <div id="gameBanner" class="carousel slide mb-4" data-ride="carousel">
+                        <div class="carousel-inner" style="max-height: 400px; background-color: #333;">
+                            <div th:each="game, iter : ${games}"
+                                 class="carousel-item"
+                                 th:classappend="${iter.index == 0 ? 'active' : ''}">
+
+                                <img th:src="${game.coverImageUrl != null ? game.coverImageUrl : 'https://via.placeholder.com/800x400?text=No+Image'}"
+                                     class="d-block w-100" style="object-fit: cover; height: 400px; opacity: 0.8;"
+                                     alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5 th:text="${game.title}">游戏标题</h5>
+                                    <p th:text="${game.description}">游戏描述</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#gameBanner" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#gameBanner" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div th:if="${isSearchResult}">
+                    <h5 class="mb-3" th:text="'搜索结果: ' + ${query}">搜索结果</h5>
+                    <div class="row">
+                        <div th:if="${games.isEmpty()}" class="col-12">
+                            <p>未找到相关游戏。</p>
+                        </div>
+                        <div th:each="game : ${games}" class="col-xl-4 col-md-6 mb-4">
+                            <div class="card shadow h-100">
+                                <img th:src="${game.coverImageUrl != null ? game.coverImageUrl : 'https://via.placeholder.com/400x250?text=No+Image'}"
+                                     class="card-img-top" style="object-fit: cover; height: 250px;" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${game.title}">游戏标题</h5>
+                                    <p class="card-text" th:text="${game.description}">游戏描述</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <hr class="my-4">
+                <h5 class="mb-3">游戏推荐</h5>
+                <div class="row">
+                    <div th:if="${recommendations.isEmpty()}" class="col-12">
+                        <p>暂无游戏推荐。</p>
+                    </div>
+
+                    <div th:each="rec : ${recommendations}" class="col-lg-6 mb-4">
+                        <div class="card shadow h-100" th:with="game=${gameMap.get(rec.gameId)}">
+                            <div class="card-body" th:if="${game != null}">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <img th:src="${game.coverImageUrl != null ? game.coverImageUrl : 'https://via.placeholder.com/100x100?text=Game'}"
+                                             class="rounded" style="width: 100px; height: 100px; object-fit: cover;" alt="Game Image">
+                                    </div>
+                                    <div class="col ml-3">
+                                        <h5 class="card-title mb-1" th:text="${game.title}">游戏标题</h5>
+                                        <p class="card-text small mb-2" th:text="${game.description}">游戏描述</p>
+                                        <p class="card-text text-primary mb-0">
+                                            <strong>推荐理由:</strong>
+                                            <span th:text="${rec.reason}">推荐理由...</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         <footer class="sticky-footer bg-white">

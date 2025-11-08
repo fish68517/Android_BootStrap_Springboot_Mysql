@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,11 +19,15 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Entity
+@Table(name = "games")
 public class Games implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "game_id", type = IdType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer gameId;
 
     /**
@@ -58,4 +64,11 @@ public class Games implements Serializable {
      * 审核时间
      */
     private LocalDateTime reviewedAt;
+
+
+
+
+    private String coverImageUrl;
+
+    private String otherImageUrls;
 }
