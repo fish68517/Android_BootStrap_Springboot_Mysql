@@ -5,16 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>管理员 - 主页</title>
-
     <link th:href="@{/admin_theme/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link th:href="@{/admin_theme/css/sb-admin-2.min.css}" rel="stylesheet">
 </head>
 
 <body id="page-top">
-
 <div id="wrapper">
-
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/admin/dashboard}">
             <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
@@ -73,17 +70,20 @@
                     <h5 class="mb-3">游戏 Banner</h5>
                     <div id="gameBanner" class="carousel slide mb-4" data-ride="carousel">
                         <div class="carousel-inner" style="max-height: 400px; background-color: #333;">
+
                             <div th:each="game, iter : ${games}"
                                  class="carousel-item"
                                  th:classappend="${iter.index == 0 ? 'active' : ''}">
 
-                                <img th:src="${game.coverImageUrl != null ? game.coverImageUrl : 'https://via.placeholder.com/800x400?text=No+Image'}"
-                                     class="d-block w-100" style="object-fit: cover; height: 400px; opacity: 0.8;"
-                                     alt="...">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5 th:text="${game.title}">游戏标题</h5>
-                                    <p th:text="${game.description}">游戏描述</p>
-                                </div>
+                                <a th:href="@{/admin/game/{id}(id=${game.gameId})}">
+                                    <img th:src="${game.coverImageUrl != null ? game.coverImageUrl : 'https://via.placeholder.com/800x400?text=No+Image'}"
+                                         class="d-block w-100" style="object-fit: cover; height: 400px; opacity: 0.8;"
+                                         alt="...">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5 th:text="${game.title}">游戏标题</h5>
+                                        <p th:text="${game.description}">游戏描述</p>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                         <a class="carousel-control-prev" href="#gameBanner" role="button" data-slide="prev">
@@ -102,14 +102,17 @@
                             <p>未找到相关游戏。</p>
                         </div>
                         <div th:each="game : ${games}" class="col-xl-4 col-md-6 mb-4">
-                            <div class="card shadow h-100">
-                                <img th:src="${game.coverImageUrl != null ? game.coverImageUrl : 'https://via.placeholder.com/400x250?text=No+Image'}"
-                                     class="card-img-top" style="object-fit: cover; height: 250px;" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title" th:text="${game.title}">游戏标题</h5>
-                                    <p class="card-text" th:text="${game.description}">游戏描述</p>
+
+                            <a th:href="@{/admin/game/{id}(id=${game.gameId})}" class="text-decoration-none text-dark">
+                                <div class="card shadow h-100">
+                                    <img th:src="${game.coverImageUrl != null ? game.coverImageUrl : 'https://via.placeholder.com/400x250?text=No+Image'}"
+                                         class="card-img-top" style="object-fit: cover; height: 250px;" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title" th:text="${game.title}">游戏标题</h5>
+                                        <p class="card-text" th:text="${game.description}">游戏描述</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -121,7 +124,6 @@
                     <div th:if="${recommendations.isEmpty()}" class="col-12">
                         <p>暂无游戏推荐。</p>
                     </div>
-
                     <div th:each="rec : ${recommendations}" class="col-lg-6 mb-4">
                         <div class="card shadow h-100" th:with="game=${gameMap.get(rec.gameId)}">
                             <div class="card-body" th:if="${game != null}">

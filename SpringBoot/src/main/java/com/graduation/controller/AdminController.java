@@ -6,6 +6,7 @@ import com.graduation.entity.Recommendations;
 import com.graduation.entity.Users;
 import com.graduation.service.GamesService;
 import com.graduation.service.RecommendationsService;
+import com.graduation.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,8 @@ public class AdminController {
 
     @Autowired
     private GamesService gamesService; // 注入 GamesService
+    @Autowired
+    private UsersService usersService; // 注入 GamesService
 
     @Autowired
     private RecommendationsService recommendationsService; // 注入 RecommendationsService
