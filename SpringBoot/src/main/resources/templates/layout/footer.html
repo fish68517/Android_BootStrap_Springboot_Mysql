@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <!-- 公共底部 Fragment -->
+    <footer th:fragment="footer" class="footer bg-dark text-white mt-5">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5><i class="bi bi-controller"></i> 游戏推荐平台</h5>
+                    <p class="text-muted small">发现精彩游戏，分享游戏体验</p>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h6>快速链接</h6>
+                    <ul class="list-unstyled">
+                        <li><a th:href="@{/}" class="text-muted text-decoration-none">首页</a></li>
+                        <li><a th:href="@{/game/list}" class="text-muted text-decoration-none">游戏列表</a></li>
+                        <li th:if="${session.currentUser != null}">
+                            <a th:href="@{/favorite/list}" class="text-muted text-decoration-none">我的收藏</a>
+                        </li>
+                        <li th:if="${session.currentUser != null}">
+                            <a th:href="@{/user/profile}" class="text-muted text-decoration-none">个人中心</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6>关于我们</h6>
+                    <p class="text-muted small">
+                        游戏推荐平台致力于为玩家提供优质的游戏推荐服务，
+                        帮助您发现更多精彩游戏。
+                    </p>
+                </div>
+            </div>
+            <hr class="bg-secondary">
+            <div class="text-center text-muted small">
+                <p class="mb-0">
+                    &copy; <span th:text="${#temporals.year(#temporals.createNow())}">2025</span> 
+                    游戏推荐平台. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

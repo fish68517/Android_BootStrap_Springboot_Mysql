@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * <p>
@@ -16,13 +15,11 @@ import lombok.Setter;
  * @author 张三
  * @since 2025-11-03
  */
-@Getter
-@Setter
+@Data
 @TableName("withdrawal_requests")
 public class WithdrawalRequests implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
 
     @TableId(value = "request_id", type = IdType.AUTO)
     private Integer requestId;
@@ -38,12 +35,12 @@ public class WithdrawalRequests implements Serializable {
     private Integer publisherId;
 
     /**
-     * 结束游戏推荐信息 (撤回理由)
+     * 撤回理由
      */
     private String reason;
 
     /**
-     * 撤回审核状态
+     * 撤回审核状态 (pending, approved, rejected)
      */
     private String status;
 

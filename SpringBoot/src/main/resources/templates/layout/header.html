@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <!-- 公共头部导航栏 Fragment -->
+    <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <i class="bi bi-controller"></i> 游戏推荐平台
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/game/list}">游戏列表</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.currentUser != null}">
+                        <a class="nav-link" th:href="@{/favorite/list}">我的收藏</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.currentUser != null and (session.currentUser.role == 'publisher' or session.currentUser.role == 'admin')}">
+                        <a class="nav-link" th:href="@{/game/publish}">发布游戏</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.currentUser != null and (session.currentUser.role == 'publisher' or session.currentUser.role == 'admin')}">
+                        <a class="nav-link" th:href="@{/game/my-games}">我的游戏</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.currentUser != null and session.currentUser.role == 'admin'}">
+                        <a class="nav-link" th:href="@{/admin/dashboard}">管理后台</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.currentUser != null}">
+                        <a class="nav-link" th:href="@{/user/profile}">
+                            <i class="bi bi-person-circle"></i> 
+                            <span th:text="${session.currentUser.nickname != null ? session.currentUser.nickname : session.currentUser.username}">用户</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" th:if="${session.currentUser == null}">
+                        <a class="nav-link" th:href="@{/user/login}">
+                            <i class="bi bi-box-arrow-in-right"></i> 登录
+                        </a>
+                    </li>
+                    <li class="nav-item" th:if="${session.currentUser == null}">
+                        <a class="nav-link" th:href="@{/user/register}">
+                            <i class="bi bi-person-plus"></i> 注册
+                        </a>
+                    </li>
+                    <li class="nav-item" th:if="${session.currentUser != null}">
+                        <a class="nav-link" th:href="@{/user/logout}">
+                            <i class="bi bi-box-arrow-right"></i> 退出
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>

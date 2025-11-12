@@ -2,10 +2,10 @@ package com.graduation.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * <p>
@@ -15,8 +15,8 @@ import lombok.Setter;
  * @author 张三
  * @since 2025-11-03
  */
-@Getter
-@Setter
+@Data
+@TableName("users")
 public class Users implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,7 +40,7 @@ public class Users implements Serializable {
     private String nickname;
 
     /**
-     * 用户分类
+     * 用户分类 (user, publisher, admin)
      */
     private String role;
 

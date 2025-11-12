@@ -2,12 +2,10 @@ package com.graduation.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * <p>
@@ -17,17 +15,13 @@ import lombok.Setter;
  * @author 张三
  * @since 2025-11-03
  */
-@Getter
-@Setter
-@Entity
-@Table(name = "games")
+@Data
+@TableName("games")
 public class Games implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "game_id", type = IdType.AUTO)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer gameId;
 
     /**
@@ -46,7 +40,17 @@ public class Games implements Serializable {
     private String description;
 
     /**
-     * 审核状态
+     * 封面图片URL
+     */
+    private String coverImageUrl;
+
+    /**
+     * 其他图片URLs (逗号分隔)
+     */
+    private String otherImageUrls;
+
+    /**
+     * 审核状态 (pending, approved, rejected)
      */
     private String status;
 
@@ -64,11 +68,4 @@ public class Games implements Serializable {
      * 审核时间
      */
     private LocalDateTime reviewedAt;
-
-
-
-
-    private String coverImageUrl;
-
-    private String otherImageUrls;
 }

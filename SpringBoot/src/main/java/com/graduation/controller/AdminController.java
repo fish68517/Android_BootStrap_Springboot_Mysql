@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.graduation.entity.Games;
 import com.graduation.entity.Recommendations;
 import com.graduation.entity.Users;
+import com.graduation.entity.WithdrawalRequests;
 import com.graduation.service.GamesService;
 import com.graduation.service.RecommendationsService;
 import com.graduation.service.UsersService;
+import com.graduation.service.WithdrawalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,21 @@ public class AdminController {
 
     @Autowired
     private RecommendationsService recommendationsService; // 注入 RecommendationsService
+    
+    @Autowired
+    private com.graduation.service.RecommendationService recommendationService; // 注入新的 RecommendationService
+    
+    @Autowired
+    private WithdrawalService withdrawalService; // 注入 WithdrawalService
+    
+    @Autowired
+    private com.graduation.service.UserService userService; // 注入 UserService
+    
+    @Autowired
+    private com.graduation.service.CommentService commentService; // 注入 CommentService
+    
+    @Autowired
+    private com.graduation.service.GameService gameService; // 注入 GameService
 
     /**
      * 显示管理员登录页面
@@ -169,5 +186,229 @@ public class AdminController {
     @GetMapping("/profile")
     public String showProfile() {
         return "admin/profile";
+    }
+    
+    /**
+     * 6. 显示推荐管理页面
+     */
+    @GetMapping("/recommendations")
+    public String showRecommendations(Model model) {
+        // 获取所有推荐列表
+        List<Recommendations> recommendations = recommendationService.getAllRecommendations();
+        
+        // 获取所有用户和游戏，用于显示详细信息
+        List<Users> users = usersService.list();
+        List<Games> games = gamesService.list();
+        
+        // 创建 Map 方便前端查询
+        Map<Integer, Users> userMap = users.stream()
+                .collect(Collectors.toMap(Users::getUserId, u -> u));
+        Map<Integer, Games> gameMap = games.stream()
+                .collect(Collectors.toMap(Games::getGameId, g -> g));
+        
+        model.addAttribute("recommendations", recommendations);
+        model.addAttribute("userMap", userMap);
+        model.addAttribute("gameMap", gameMap);
+        
+        // 获取所有用户和已审核通过的游戏，用于创建新推荐
+        model.addAttribute("users", users);
+        
+        // 只显示已审核通过的游戏
+        List<Games> approvedGames = games.stream()
+                .filter(g -> "approved".equals(g.getStatus()))
+                .collect(Collectors.toList());
+        model.addAttribute("approvedGames", approvedGames);
+        
+        return "admin/recommendations";
+    }
+    
+    /**
+     * 7. 处理创建推荐请求
+     */
+    @PostMapping("/recommendations/create")
+    public String createRecommendation(@RequestParam("userId") Integer userId,
+                                      @RequestParam("gameId") Integer gameId,
+                                      @RequestParam("reason") String reason,
+                                      @SessionAttribute(value = "currentUser", required = false) Users currentUser,
+                                      Model model) {
+        try {
+            // 验证管理员身份
+            if (currentUser == null || !"admin".equals(currentUser.getRole())) {
+                model.addAttribute("error", "您没有权限执行此操作");
+                return "redirect:/admin/recommendations";
+            }
+            
+            // 创建推荐
+            recommendationService.createRecommendation(currentUser.getUserId(), userId, gameId, reason);
+            
+            model.addAttribute("success", "推荐创建成功");
+        } catch (Exception e) {
+            model.addAttribute("error", "创建推荐失败: " + e.getMessage());
+        }
+        
+        return "redirect:/admin/recommendations";
+    }
+    
+    /**
+     * 8. 显示待审核游戏列表页面
+     */
+    @GetMapping("/games/pending")
+    public String showPendingGames(Model model) {
+        // 获取所有待审核的游戏
+        List<Games> pendingGames = gameService.getGamesByStatus("pending");
+        
+        // 获取发布者信息
+        Map<Integer, Users> publisherMap = usersService.list().stream()
+                .collect(Collectors.toMap(Users::getUserId, u -> u));
+        
+        model.addAttribute("pendingGames", pendingGames);
+        model.addAttribute("publisherMap", publisherMap);
+        
+        return "admin/review-games";
+    }
+    
+    /**
+     * 9. 处理游戏审核
+     */
+    @PostMapping("/games/review")
+    public String reviewGame(@RequestParam("gameId") Integer gameId,
+                            @RequestParam("status") String status,
+                            @SessionAttribute(value = "currentUser", required = false) Users currentUser,
+                            Model model) {
+        try {
+            // 验证管理员身份
+            if (currentUser == null || !"admin".equals(currentUser.getRole())) {
+                model.addAttribute("error", "您没有权限执行此操作");
+                return "redirect:/admin/games/pending";
+            }
+            
+            // 审核游戏
+            gameService.reviewGame(gameId, status, currentUser.getUserId());
+            
+            if ("approved".equals(status)) {
+                model.addAttribute("success", "游戏已通过审核");
+            } else {
+                model.addAttribute("success", "游戏已被拒绝");
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "审核失败: " + e.getMessage());
+        }
+        
+        return "redirect:/admin/games/pending";
+    }
+    
+    /**
+     * 10. 显示待审核评论列表页面
+     */
+    @GetMapping("/comments/pending")
+    public String showPendingComments(Model model) {
+        // 获取所有待审核的评论
+        List<com.graduation.entity.Comments> pendingComments = commentService.getPendingComments();
+        
+        // 获取相关的游戏和用户信息
+        Map<Integer, Games> gameMap = gamesService.list().stream()
+                .collect(Collectors.toMap(Games::getGameId, g -> g));
+        Map<Integer, Users> userMap = usersService.list().stream()
+                .collect(Collectors.toMap(Users::getUserId, u -> u));
+        
+        model.addAttribute("pendingComments", pendingComments);
+        model.addAttribute("gameMap", gameMap);
+        model.addAttribute("userMap", userMap);
+        
+        return "admin/review-comments";
+    }
+    
+    /**
+     * 11. 处理评论审核
+     */
+    @PostMapping("/comments/review")
+    public String reviewComment(@RequestParam("commentId") Integer commentId,
+                               @RequestParam("status") String status,
+                               @SessionAttribute(value = "currentUser", required = false) Users currentUser,
+                               Model model) {
+        try {
+            // 验证管理员身份
+            if (currentUser == null || !"admin".equals(currentUser.getRole())) {
+                model.addAttribute("error", "您没有权限执行此操作");
+                return "redirect:/admin/comments/pending";
+            }
+            
+            // 审核评论
+            commentService.reviewComment(commentId, status, currentUser.getUserId());
+            
+            if ("approved".equals(status)) {
+                model.addAttribute("success", "评论已通过审核");
+            } else {
+                model.addAttribute("success", "评论已被拒绝");
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "审核失败: " + e.getMessage());
+        }
+        
+        return "redirect:/admin/comments/pending";
+    }
+    
+    /**
+     * 12. 显示用户管理页面
+     */
+    @GetMapping("/users")
+    public String showUsers(Model model) {
+        // 获取所有用户
+        List<Users> users = userService.getAllUsers();
+        
+        model.addAttribute("users", users);
+        
+        return "admin/users";
+    }
+    
+    /**
+     * 13. 显示待审核撤回申请列表页面
+     */
+    @GetMapping("/withdrawals/pending")
+    public String showPendingWithdrawals(Model model) {
+        // 获取所有待审核的撤回申请
+        List<WithdrawalRequests> withdrawalRequests = withdrawalService.getPendingWithdrawalRequests();
+        
+        // 获取相关的游戏和用户信息
+        Map<Integer, Games> gameMap = gamesService.list().stream()
+                .collect(Collectors.toMap(Games::getGameId, g -> g));
+        Map<Integer, Users> userMap = usersService.list().stream()
+                .collect(Collectors.toMap(Users::getUserId, u -> u));
+        
+        model.addAttribute("withdrawalRequests", withdrawalRequests);
+        model.addAttribute("gameMap", gameMap);
+        model.addAttribute("userMap", userMap);
+        
+        return "admin/review-withdrawals";
+    }
+    
+    /**
+     * 14. 处理撤回申请审核
+     */
+    @PostMapping("/withdrawals/review")
+    public String reviewWithdrawal(@RequestParam("requestId") Integer requestId,
+                                   @RequestParam("status") String status,
+                                   @SessionAttribute(value = "currentUser", required = false) Users currentUser,
+                                   Model model) {
+        try {
+            // 验证管理员身份
+            if (currentUser == null || !"admin".equals(currentUser.getRole())) {
+                model.addAttribute("error", "您没有权限执行此操作");
+                return "redirect:/admin/withdrawals/pending";
+            }
+            
+            // 审核撤回申请
+            withdrawalService.reviewWithdrawalRequest(requestId, status, currentUser.getUserId());
+            
+            if ("approved".equals(status)) {
+                model.addAttribute("success", "撤回申请已通过，游戏及相关数据已删除");
+            } else {
+                model.addAttribute("success", "撤回申请已拒绝");
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "审核失败: " + e.getMessage());
+        }
+        
+        return "redirect:/admin/withdrawals/pending";
     }
 }

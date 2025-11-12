@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布游戏 - 游戏推荐平台</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .publish-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <i class="bi bi-controller"></i> 游戏推荐平台
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/game/list}">游戏列表</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/game/my-games}">我的游戏</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/user/profile}">个人中心</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/user/logout}">退出</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 发布表单 -->
+    <div class="container my-5">
+        <div class="publish-container">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0">
+                        <i class="bi bi-plus-circle"></i> 发布新游戏
+                    </h3>
+                    <p class="mb-0 mt-2">填写游戏信息，提交后等待管理员审核</p>
+                </div>
+                <div class="card-body p-4">
+                    <!-- 错误消息 -->
+                    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <span th:text="${errorMessage}"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+
+                    <!-- 发布表单 -->
+                    <form th:action="@{/game/publish}" th:object="${gameSubmitDTO}" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">
+                                游戏标题 <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="title" 
+                                   th:field="*{title}"
+                                   placeholder="请输入游戏标题"
+                                   required>
+                            <div th:if="${#fields.hasErrors('title')}" class="text-danger small mt-1">
+                                <span th:errors="*{title}"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">
+                                游戏描述 <span class="text-danger">*</span>
+                            </label>
+                            <textarea class="form-control" 
+                                      id="description" 
+                                      th:field="*{description}"
+                                      rows="6"
+                                      placeholder="请详细描述游戏内容、玩法、特色等"
+                                      required></textarea>
+                            <div class="form-text">详细的描述有助于玩家了解您的游戏</div>
+                            <div th:if="${#fields.hasErrors('description')}" class="text-danger small mt-1">
+                                <span th:errors="*{description}"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="coverImageUrl" class="form-label">
+                                封面图片URL
+                            </label>
+                            <input type="url" 
+                                   class="form-control" 
+                                   id="coverImageUrl" 
+                                   th:field="*{coverImageUrl}"
+                                   placeholder="https://example.com/cover.jpg">
+                            <div class="form-text">请输入游戏封面图片的URL地址，或使用下方上传功能</div>
+                            <div th:if="${#fields.hasErrors('coverImageUrl')}" class="text-danger small mt-1">
+                                <span th:errors="*{coverImageUrl}"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="coverImage" class="form-label">
+                                或上传封面图片
+                            </label>
+                            <input type="file" 
+                                   class="form-control" 
+                                   id="coverImage" 
+                                   name="coverImage"
+                                   accept="image/jpeg,image/jpg,image/png,image/gif"
+                                   onchange="previewImage(this, 'coverPreview')">
+                            <div class="form-text">支持JPG、PNG、GIF格式，最大10MB</div>
+                            <img id="coverPreview" class="image-preview mt-2" style="display:none; max-width: 300px;">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="otherImageUrls" class="form-label">
+                                其他图片URLs
+                            </label>
+                            <textarea class="form-control" 
+                                      id="otherImageUrls" 
+                                      th:field="*{otherImageUrls}"
+                                      rows="3"
+                                      placeholder="https://example.com/img1.jpg,https://example.com/img2.jpg"></textarea>
+                            <div class="form-text">多个图片URL请用英文逗号分隔，或使用下方上传功能</div>
+                            <div th:if="${#fields.hasErrors('otherImageUrls')}" class="text-danger small mt-1">
+                                <span th:errors="*{otherImageUrls}"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="otherImages" class="form-label">
+                                或上传其他图片
+                            </label>
+                            <input type="file" 
+                                   class="form-control" 
+                                   id="otherImages" 
+                                   name="otherImages"
+                                   accept="image/jpeg,image/jpg,image/png,image/gif"
+                                   multiple>
+                            <div class="form-text">可以选择多张图片，支持JPG、PNG、GIF格式</div>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i>
+                            <strong>提示：</strong>游戏提交后将进入待审核状态，管理员审核通过后才会在游戏列表中显示。
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-send"></i> 提交发布
+                            </button>
+                            <a th:href="@{/game/my-games}" class="btn btn-outline-secondary">
+                                <i class="bi bi-x-circle"></i> 取消
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/custom.js}"></script>
+</body>
+</html>

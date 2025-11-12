@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页 - 游戏推荐平台</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+            margin-bottom: 40px;
+        }
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .hero-section p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        .game-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+        }
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        .game-card img {
+            height: 200px;
+            object-fit: cover;
+        }
+        .section-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .section-title i {
+            margin-right: 10px;
+        }
+        .recommendation-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .recommendation-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .footer {
+            margin-top: 60px;
+        }
+        .feature-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div th:replace="~{layout/header :: navbar}"></div>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container text-center">
+            <h1><i class="bi bi-controller"></i> 欢迎来到游戏推荐平台</h1>
+            <p>发现精彩游戏，分享游戏体验，找到属于你的游戏世界</p>
+            
+            <!-- 搜索框 -->
+            <div class="search-box">
+                <form th:action="@{/game/list}" method="get">
+                    <div class="input-group input-group-lg">
+                        <input type="text" 
+                               class="form-control" 
+                               name="query" 
+                               placeholder="搜索游戏名称...">
+                        <button class="btn btn-light" type="submit">
+                            <i class="bi bi-search"></i> 搜索
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- 未登录用户显示注册/登录按钮 -->
+            <div th:if="${session.currentUser == null}" class="mt-4">
+                <a th:href="@{/user/register}" class="btn btn-light btn-lg me-2">
+                    <i class="bi bi-person-plus"></i> 立即注册
+                </a>
+                <a th:href="@{/user/login}" class="btn btn-outline-light btn-lg">
+                    <i class="bi bi-box-arrow-in-right"></i> 登录
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 为您推荐（仅登录用户可见） -->
+        <div th:if="${session.currentUser != null and recommendations != null and !recommendations.isEmpty()}" class="mb-5">
+            <h2 class="section-title">
+                <i class="bi bi-star-fill text-warning"></i> 为您推荐
+            </h2>
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="col" th:each="rec : ${recommendations}">
+                    <div class="card recommendation-card shadow-sm h-100" th:with="game=${recommendedGameMap != null ? recommendedGameMap.get(rec.gameId) : null}">
+                        <div class="card-body" th:if="${game != null}">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-auto">
+                                    <img th:src="${game.coverImageUrl != null and !game.coverImageUrl.isEmpty() ? game.coverImageUrl : 'https://via.placeholder.com/100x100?text=Game'}"
+                                         class="rounded" 
+                                         style="width: 100px; height: 100px; object-fit: cover;" 
+                                         th:alt="${game.title}">
+                                </div>
+                                <div class="col ms-3">
+                                    <h5 class="card-title mb-1" th:text="${game.title}">游戏标题</h5>
+                                    <p class="card-text small text-muted mb-2" 
+                                       th:text="${#strings.length(game.description) > 80 ? #strings.substring(game.description, 0, 80) + '...' : game.description}">
+                                        游戏描述
+                                    </p>
+                                    <p class="card-text text-primary mb-2">
+                                        <i class="bi bi-lightbulb"></i>
+                                        <strong>推荐理由：</strong>
+                                        <span th:text="${rec.reason}">推荐理由...</span>
+                                    </p>
+                                    <a th:href="@{/game/detail/{id}(id=${game.gameId})}" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-eye"></i> 查看详情
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 热门游戏 -->
+        <div class="mb-5">
+            <h2 class="section-title">
+                <i class="bi bi-fire text-danger"></i> 热门游戏
+            </h2>
+            
+            <div th:if="${games != null and !games.isEmpty()}" class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+                <div class="col" th:each="game : ${games}">
+                    <div class="card game-card shadow-sm">
+                        <img th:src="${game.coverImageUrl != null and !game.coverImageUrl.isEmpty() ? game.coverImageUrl : 'https://via.placeholder.com/400x200?text=No+Image'}" 
+                             class="card-img-top" 
+                             th:alt="${game.title}">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${game.title}">游戏标题</h5>
+                            <p class="card-text text-muted small" 
+                               th:text="${#strings.length(game.description) > 60 ? #strings.substring(game.description, 0, 60) + '...' : game.description}">
+                                游戏描述
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a th:href="@{/game/detail/{id}(id=${game.gameId})}" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-eye"></i> 查看
+                                </a>
+                                <small class="text-muted" th:text="${#temporals.format(game.submittedAt, 'yyyy-MM-dd')}">
+                                    2024-01-01
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 空状态 -->
+            <div th:if="${games == null or games.isEmpty()}" class="text-center py-5">
+                <i class="bi bi-inbox" style="font-size: 4rem; color: #ccc;"></i>
+                <h4 class="mt-3 text-muted">暂无游戏</h4>
+                <p class="text-muted">还没有已审核通过的游戏</p>
+            </div>
+            
+            <!-- 查看更多按钮 -->
+            <div th:if="${games != null and !games.isEmpty()}" class="text-center mt-4">
+                <a th:href="@{/game/list}" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-grid"></i> 查看所有游戏
+                </a>
+            </div>
+        </div>
+
+        <!-- 平台特色（未登录用户可见） -->
+        <div th:if="${session.currentUser == null}" class="mb-5">
+            <h2 class="section-title text-center">
+                <i class="bi bi-stars"></i> 平台特色
+            </h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="feature-card">
+                        <i class="bi bi-star-fill feature-icon"></i>
+                        <h4>个性化推荐</h4>
+                        <p class="text-muted">
+                            基于您的游戏偏好，为您推荐最适合的游戏
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="feature-card">
+                        <i class="bi bi-chat-dots feature-icon"></i>
+                        <h4>社区互动</h4>
+                        <p class="text-muted">
+                            发表评论、点赞互动，与其他玩家分享游戏体验
+                        </p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="feature-card">
+                        <i class="bi bi-heart feature-icon"></i>
+                        <h4>收藏管理</h4>
+                        <p class="text-muted">
+                            收藏喜欢的游戏，随时查看您的游戏收藏库
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <div th:replace="~{layout/footer :: footer}"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

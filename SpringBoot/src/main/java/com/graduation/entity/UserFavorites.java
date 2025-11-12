@@ -1,37 +1,32 @@
 package com.graduation.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * <p>
- * 用户收藏表
+ * 用户收藏表 (复合主键: userId + gameId)
  * </p>
  *
  * @author 张三
  * @since 2025-11-03
  */
-@Getter
-@Setter
+@Data
 @TableName("user_favorites")
 public class UserFavorites implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 用户ID
+     * 用户ID (复合主键之一)
      */
-    //@TableId("user_id")
     private Integer userId;
 
     /**
-     * 游戏ID
+     * 游戏ID (复合主键之一)
      */
-    // @TableId("game_id")
     private Integer gameId;
 
     /**

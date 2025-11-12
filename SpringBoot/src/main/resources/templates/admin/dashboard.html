@@ -32,6 +32,24 @@
             <a class="nav-link" th:href="@{/admin/likes}"><i class="fas fa-fw fa-thumbs-up"></i><span>点赞</span></a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/recommendations}"><i class="fas fa-fw fa-star"></i><span>推荐管理</span></a>
+        </li>
+        <hr class="sidebar-divider">
+        <div class="sidebar-heading">审核管理</div>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/games/pending}"><i class="fas fa-fw fa-gamepad"></i><span>游戏审核</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/comments/pending}"><i class="fas fa-fw fa-comments"></i><span>评论审核</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/withdrawals/pending}"><i class="fas fa-fw fa-undo"></i><span>撤回审核</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/users}"><i class="fas fa-fw fa-users"></i><span>用户管理</span></a>
+        </li>
+        <hr class="sidebar-divider">
+        <li class="nav-item" hidden="hidden">
             <a class="nav-link" th:href="@{/admin/profile}"><i class="fas fa-fw fa-user"></i><span>个人中心</span></a>
         </li>
     </ul>

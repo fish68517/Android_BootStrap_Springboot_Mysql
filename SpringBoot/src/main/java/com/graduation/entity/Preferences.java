@@ -2,9 +2,9 @@ package com.graduation.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * <p>
@@ -14,8 +14,8 @@ import lombok.Setter;
  * @author 张三
  * @since 2025-11-03
  */
-@Getter
-@Setter
+@Data
+@TableName("preferences")
 public class Preferences implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -24,7 +24,7 @@ public class Preferences implements Serializable {
     private Integer preferenceId;
 
     /**
-     * 偏好名称 (如: RPG, 策略, 射击)
+     * 偏好名称 (如: RPG, 策略, 射击, 模拟, 休闲)
      */
     private String preferenceName;
 }

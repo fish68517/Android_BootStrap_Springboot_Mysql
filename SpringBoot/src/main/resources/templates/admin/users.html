@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>用户管理 - 管理员后台</title>
+    <link th:href="@{/admin_theme/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link th:href="@{/admin_theme/css/sb-admin-2.min.css}" rel="stylesheet">
+</head>
+
+<body id="page-top">
+<div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/admin/dashboard}">
+            <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
+            <div class="sidebar-brand-text mx-3">管理员后台</div>
+        </a>
+        <hr class="sidebar-divider my-0">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/dashboard}"><i class="fas fa-fw fa-tachometer-alt"></i><span>主页</span></a>
+        </li>
+        <hr class="sidebar-divider">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/leaderboard}"><i class="fas fa-fw fa-list-ol"></i><span>排行榜</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/favorites}"><i class="fas fa-fw fa-heart"></i><span>收藏</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/likes}"><i class="fas fa-fw fa-thumbs-up"></i><span>点赞</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/recommendations}"><i class="fas fa-fw fa-star"></i><span>推荐管理</span></a>
+        </li>
+        <hr class="sidebar-divider">
+        <div class="sidebar-heading">审核管理</div>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/games/pending}"><i class="fas fa-fw fa-gamepad"></i><span>游戏审核</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/comments/pending}"><i class="fas fa-fw fa-comments"></i><span>评论审核</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/withdrawals/pending}"><i class="fas fa-fw fa-undo"></i><span>撤回审核</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" th:href="@{/admin/users}"><i class="fas fa-fw fa-users"></i><span>用户管理</span></a>
+        </li>
+        <hr class="sidebar-divider">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/profile}"><i class="fas fa-fw fa-user"></i><span>个人中心</span></a>
+        </li>
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">管理员</span>
+                            <img class="img-profile rounded-circle" th:src="@{/admin_theme/img/undraw_profile.svg}">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <h1 class="h3 mb-4 text-gray-800">用户管理</h1>
+
+                <!-- Success/Error Messages -->
+                <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <span th:text="${success}"></span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span th:text="${error}"></span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <!-- User Statistics -->
+                <div class="row mb-4">
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            总用户数</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${users.size()}">0</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-users fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            普通用户</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" 
+                                             th:text="${#lists.size(users.?[role == 'user'])}">0</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-user fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                            发布者</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" 
+                                             th:text="${#lists.size(users.?[role == 'publisher'])}">0</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-gamepad fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            管理员</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" 
+                                             th:text="${#lists.size(users.?[role == 'admin'])}">0</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-user-shield fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Users Table -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">用户列表</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>用户ID</th>
+                                        <th>用户名</th>
+                                        <th>昵称</th>
+                                        <th>角色</th>
+                                        <th>注册时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="user : ${users}">
+                                        <td th:text="${user.userId}">1</td>
+                                        <td th:text="${user.username}">username@example.com</td>
+                                        <td th:text="${user.nickname}">昵称</td>
+                                        <td>
+                                            <span th:if="${user.role == 'admin'}" class="badge badge-warning">管理员</span>
+                                            <span th:if="${user.role == 'publisher'}" class="badge badge-info">发布者</span>
+                                            <span th:if="${user.role == 'user'}" class="badge badge-success">普通用户</span>
+                                        </td>
+                                        <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm')}">2025-01-01 12:00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2025</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+
+<script th:src="@{/admin_theme/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/admin_theme/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/admin_theme/vendor/jquery-easing/jquery.easing.min.js}"></script>
+<script th:src="@{/admin_theme/js/sb-admin-2.min.js}"></script>
+</body>
+</html>

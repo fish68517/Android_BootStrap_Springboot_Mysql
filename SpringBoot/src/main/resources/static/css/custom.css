@@ -1,0 +1,114 @@
+/* 自定义样式 */
+
+/* 全局样式 */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 游戏卡片样式 */
+.game-card {
+    transition: transform 0.2s;
+    margin-bottom: 20px;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.game-card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* 评论样式 */
+.comment-item {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 15px 0;
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+}
+
+.comment-author {
+    font-weight: bold;
+    color: #333;
+}
+
+.comment-time {
+    color: #999;
+    font-size: 0.9em;
+}
+
+.comment-content {
+    margin-top: 10px;
+    color: #555;
+}
+
+/* 点赞按钮样式 */
+.like-btn {
+    cursor: pointer;
+    color: #999;
+    transition: color 0.2s;
+}
+
+.like-btn:hover {
+    color: #007bff;
+}
+
+.like-btn.liked {
+    color: #dc3545;
+}
+
+/* 收藏按钮样式 */
+.favorite-btn {
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.favorite-btn.favorited {
+    color: #ffc107;
+}
+
+/* 状态标签样式 */
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.85em;
+}
+
+.status-pending {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.status-approved {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.status-rejected {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* 搜索框样式 */
+.search-box {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+/* 图片预览样式 */
+.image-preview {
+    max-width: 100%;
+    max-height: 300px;
+    margin-top: 10px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .game-card img {
+        height: 150px;
+    }
+}
