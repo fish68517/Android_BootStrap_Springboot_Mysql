@@ -27,7 +27,8 @@
                     <li class="nav-item" th:if="${session.currentUser != null and (session.currentUser.role == 'publisher' or session.currentUser.role == 'admin')}">
                         <a class="nav-link" th:href="@{/game/publish}">发布游戏</a>
                     </li>
-                    <li class="nav-item" th:if="${session.currentUser != null and (session.currentUser.role == 'publisher' or session.currentUser.role == 'admin')}">
+                    <li class="nav-item" th:if="${session.currentUser != null and (session.currentUser.role == 'publisher' or session.currentUser.role == 'admin')}"
+                       >
                         <a class="nav-link" th:href="@{/game/my-games}">我的游戏</a>
                     </li>
                     <li class="nav-item" th:if="${session.currentUser != null and session.currentUser.role == 'admin'}">
