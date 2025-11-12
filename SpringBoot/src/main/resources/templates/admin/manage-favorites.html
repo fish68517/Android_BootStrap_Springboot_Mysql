@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/_layout}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,107 +19,12 @@
     <link th:href="@{/admin_theme/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 </head>
 
-<body id="page-top">
+<body layout:fragment="content">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/admin/dashboard}">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-gamepad"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">游戏推荐平台</div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/dashboard}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>控制台</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                审核管理
-            </div>
-
-            <!-- Nav Item - 游戏审核 -->
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/games/pending}">
-                    <i class="fas fa-fw fa-gamepad"></i>
-                    <span>游戏审核</span></a>
-            </li>
-
-            <!-- Nav Item - 评论审核 -->
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/comments/pending}">
-                    <i class="fas fa-fw fa-comments"></i>
-                    <span>评论审核</span></a>
-            </li>
-
-            <!-- Nav Item - 撤回审核 -->
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/withdrawals/pending}">
-                    <i class="fas fa-fw fa-undo"></i>
-                    <span>撤回审核</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                系统管理
-            </div>
-
-            <!-- Nav Item - 用户管理 -->
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/users}">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>用户管理</span></a>
-            </li>
-
-            <!-- Nav Item - 推荐管理 -->
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/recommendations}">
-                    <i class="fas fa-fw fa-star"></i>
-                    <span>推荐管理</span></a>
-            </li>
-
-            <!-- Nav Item - 收藏管理 -->
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{/admin/manage-favorites}">
-                    <i class="fas fa-fw fa-heart"></i>
-                    <span>收藏管理</span></a>
-            </li>
-
-            <!-- Nav Item - 点赞管理 -->
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin/manage-likes}">
-                    <i class="fas fa-fw fa-thumbs-up"></i>
-                    <span>点赞管理</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-        </ul>
-        <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -125,38 +32,7 @@
             <!-- Main Content -->
             <div id="content">
 
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">管理员</span>
-                                <i class="fas fa-user-circle fa-2x"></i>
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" th:href="@{/user/logout}">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    退出登录
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
-
-                </nav>
-                <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/_layout}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,47 +12,12 @@
     <link th:href="@{/admin_theme/css/sb-admin-2.min.css}" rel="stylesheet">
 </head>
 
-<body id="page-top">
+<body layout:fragment="content">
 <div id="wrapper">
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/admin/dashboard}">
-            <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
-            <div class="sidebar-brand-text mx-3">管理员后台</div>
-        </a>
-        <hr class="sidebar-divider my-0">
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/admin/dashboard}"><i class="fas fa-fw fa-tachometer-alt"></i><span>主页</span></a>
-        </li>
-        <hr class="sidebar-divider">
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/admin/leaderboard}"><i class="fas fa-fw fa-list-ol"></i><span>排行榜</span></a>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link" th:href="@{/admin/recommendations}"><i class="fas fa-fw fa-star"></i><span>推荐管理</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/admin/manage-favorites}"><i class="fas fa-fw fa-heart"></i><span>收藏管理</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/admin/manage-likes}"><i class="fas fa-fw fa-thumbs-up"></i><span>点赞管理</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/admin/profile}"><i class="fas fa-fw fa-user"></i><span>个人中心</span></a>
-        </li>
-    </ul>
+
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">管理员</span>
-                            <img class="img-profile rounded-circle" th:src="@{/img/undraw_profile.png}">
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+
             <div class="container-fluid">
 
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
