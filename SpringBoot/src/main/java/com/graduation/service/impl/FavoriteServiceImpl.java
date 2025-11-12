@@ -75,4 +75,15 @@ public class FavoriteServiceImpl implements FavoriteService {
         int count = userFavoritesMapper.checkUserFavorited(userId, gameId);
         return count > 0;
     }
+    
+    @Override
+    public List<UserFavorites> getAllFavorites() {
+        return userFavoritesMapper.selectList(null);
+    }
+    
+    @Override
+    @Transactional
+    public void removeFavorite(Integer userId, Integer gameId) {
+        userFavoritesMapper.deleteByUserIdAndGameId(userId, gameId);
+    }
 }

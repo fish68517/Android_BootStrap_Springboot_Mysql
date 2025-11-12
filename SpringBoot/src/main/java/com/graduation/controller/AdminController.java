@@ -47,6 +47,9 @@ public class AdminController {
     
     @Autowired
     private com.graduation.service.GameService gameService; // 注入 GameService
+    
+    @Autowired
+    private com.graduation.service.FavoriteService favoriteService; // 注入 FavoriteService
 
     /**
      * 显示管理员登录页面
@@ -410,5 +413,113 @@ public class AdminController {
         }
         
         return "redirect:/admin/withdrawals/pending";
+    }
+    
+    /**
+     * 15. 显示所有收藏管理页面
+     */
+    @GetMapping("/manage-favorites")
+    public String showManageFavorites(Model model) {
+        // 获取所有收藏记录
+        List<com.graduation.entity.UserFavorites> allFavorites = favoriteService.getAllFavorites();
+        
+        // 获取所有用户和游戏信息
+        Map<Integer, Users> userMap = usersService.list().stream()
+                .collect(Collectors.toMap(Users::getUserId, u -> u));
+        Map<Integer, Games> gameMap = gamesService.list().stream()
+                .collect(Collectors.toMap(Games::getGameId, g -> g));
+        
+        model.addAttribute("favorites", allFavorites);
+        model.addAttribute("userMap", userMap);
+        model.addAttribute("gameMap", gameMap);
+        
+        return "admin/manage-favorites";
+    }
+    
+    /**
+     * 16. 删除收藏记录
+     */
+    @PostMapping("/favorites/delete")
+    @ResponseBody
+    public Map<String, Object> deleteFavorite(@RequestParam("userId") Integer userId,
+                                              @RequestParam("gameId") Integer gameId,
+                                              @SessionAttribute(value = "currentUser", required = false) Users currentUser) {
+        Map<String, Object> result = new java.util.HashMap<>();
+        
+        try {
+            // 验证管理员身份
+            if (currentUser == null || !"admin".equals(currentUser.getRole())) {
+                result.put("success", false);
+                result.put("message", "您没有权限执行此操作");
+                return result;
+            }
+            
+            // 删除收藏记录
+            favoriteService.removeFavorite(userId, gameId);
+            
+            result.put("success", true);
+            result.put("message", "收藏记录已删除");
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("message", "删除失败: " + e.getMessage());
+        }
+        
+        return result;
+    }
+    
+    /**
+     * 17. 显示所有点赞管理页面
+     */
+    @GetMapping("/manage-likes")
+    public String showManageLikes(Model model) {
+        // 获取所有点赞记录
+        List<com.graduation.entity.CommentLikes> allLikes = commentService.getAllLikes();
+        
+        // 获取所有用户、评论和游戏信息
+        Map<Integer, Users> userMap = usersService.list().stream()
+                .collect(Collectors.toMap(Users::getUserId, u -> u));
+        Map<Integer, com.graduation.entity.Comments> commentMap = 
+            commentService.getAllComments().stream()
+                .collect(Collectors.toMap(com.graduation.entity.Comments::getCommentId, c -> c));
+        Map<Integer, Games> gameMap = gamesService.list().stream()
+                .collect(Collectors.toMap(Games::getGameId, g -> g));
+        
+        model.addAttribute("likes", allLikes);
+        model.addAttribute("userMap", userMap);
+        model.addAttribute("commentMap", commentMap);
+        model.addAttribute("gameMap", gameMap);
+        
+        return "admin/manage-likes";
+    }
+    
+    /**
+     * 18. 删除点赞记录
+     */
+    @PostMapping("/likes/delete")
+    @ResponseBody
+    public Map<String, Object> deleteLike(@RequestParam("userId") Integer userId,
+                                          @RequestParam("commentId") Integer commentId,
+                                          @SessionAttribute(value = "currentUser", required = false) Users currentUser) {
+        Map<String, Object> result = new java.util.HashMap<>();
+        
+        try {
+            // 验证管理员身份
+            if (currentUser == null || !"admin".equals(currentUser.getRole())) {
+                result.put("success", false);
+                result.put("message", "您没有权限执行此操作");
+                return result;
+            }
+            
+            // 删除点赞记录
+            commentService.removeLike(commentId, userId);
+            
+            result.put("success", true);
+            result.put("message", "点赞记录已删除");
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("message", "删除失败: " + e.getMessage());
+        }
+        
+        return result;
     }
 }

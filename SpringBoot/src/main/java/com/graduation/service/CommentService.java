@@ -171,4 +171,35 @@ public class CommentService {
     public boolean isLikedByUser(Integer commentId, Integer userId) {
         return commentLikesMapper.checkUserLiked(userId, commentId) > 0;
     }
+    
+    /**
+     * 获取所有评论（包括所有状态）
+     * 用于管理员查看
+     * 
+     * @return 所有评论列表
+     */
+    public List<Comments> getAllComments() {
+        return commentsMapper.selectList(null);
+    }
+    
+    /**
+     * 获取所有点赞记录
+     * 用于管理员查看
+     * 
+     * @return 所有点赞记录列表
+     */
+    public List<CommentLikes> getAllLikes() {
+        return commentLikesMapper.selectList(null);
+    }
+    
+    /**
+     * 管理员删除点赞记录
+     * 
+     * @param commentId 评论ID
+     * @param userId 用户ID
+     */
+    @Transactional
+    public void removeLike(Integer commentId, Integer userId) {
+        commentLikesMapper.deleteByUserIdAndCommentId(userId, commentId);
+    }
 }

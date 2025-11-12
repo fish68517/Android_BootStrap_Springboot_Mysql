@@ -25,14 +25,14 @@
         <li class="nav-item">
             <a class="nav-link" th:href="@{/admin/leaderboard}"><i class="fas fa-fw fa-list-ol"></i><span>排行榜</span></a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/admin/favorites}"><i class="fas fa-fw fa-heart"></i><span>收藏</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/admin/likes}"><i class="fas fa-fw fa-thumbs-up"></i><span>点赞</span></a>
-        </li>
         <li class="nav-item active">
             <a class="nav-link" th:href="@{/admin/recommendations}"><i class="fas fa-fw fa-star"></i><span>推荐管理</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/manage-favorites}"><i class="fas fa-fw fa-heart"></i><span>收藏管理</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/manage-likes}"><i class="fas fa-fw fa-thumbs-up"></i><span>点赞管理</span></a>
         </li>
         <li class="nav-item">
             <a class="nav-link" th:href="@{/admin/profile}"><i class="fas fa-fw fa-user"></i><span>个人中心</span></a>
@@ -46,7 +46,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">管理员</span>
-                            <img class="img-profile rounded-circle" th:src="@{/admin_theme/img/undraw_profile.svg}">
+                            <img class="img-profile rounded-circle" th:src="@{/img/undraw_profile.png}">
                         </a>
                     </li>
                 </ul>
@@ -98,7 +98,7 @@
                                     <tr th:each="rec : ${recommendations}">
                                         <td th:text="${rec.recommendationId}">1</td>
                                         <td>
-                                            <span th:if="${userMap.containsKey(rec.userId)}" 
+                                            <span th:if="${userMap.containsKey(rec.userId)}"
                                                   th:text="${userMap.get(rec.userId).nickname != null ? userMap.get(rec.userId).nickname : userMap.get(rec.userId).username}">
                                                 用户名
                                             </span>
@@ -107,7 +107,7 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <span th:if="${gameMap.containsKey(rec.gameId)}" 
+                                            <span th:if="${gameMap.containsKey(rec.gameId)}"
                                                   th:text="${gameMap.get(rec.gameId).title}">
                                                 游戏名称
                                             </span>
@@ -152,8 +152,8 @@
                         <label for="userId">选择用户</label>
                         <select class="form-control" id="userId" name="userId" required>
                             <option value="">-- 请选择用户 --</option>
-                            <option th:each="user : ${users}" 
-                                    th:value="${user.userId}" 
+                            <option th:each="user : ${users}"
+                                    th:value="${user.userId}"
                                     th:text="${user.nickname != null ? user.nickname + ' (' + user.username + ')' : user.username}">
                                 用户名
                             </option>
@@ -163,8 +163,8 @@
                         <label for="gameId">选择游戏</label>
                         <select class="form-control" id="gameId" name="gameId" required>
                             <option value="">-- 请选择游戏 --</option>
-                            <option th:each="game : ${approvedGames}" 
-                                    th:value="${game.gameId}" 
+                            <option th:each="game : ${approvedGames}"
+                                    th:value="${game.gameId}"
                                     th:text="${game.title}">
                                 游戏名称
                             </option>
@@ -172,7 +172,7 @@
                     </div>
                     <div class="form-group">
                         <label for="reason">推荐理由</label>
-                        <textarea class="form-control" id="reason" name="reason" rows="3" 
+                        <textarea class="form-control" id="reason" name="reason" rows="3"
                                   placeholder="请输入推荐理由..." required></textarea>
                     </div>
                 </div>

@@ -123,7 +123,7 @@ src
         │       ├── vendor
         │       │   └── ...
         │       └── img
-        │           └── undraw_profile.svg
+        │           └── undraw_profile.png
         │   
         ├── templates
         │   └── ... (你的HTML模板文件)
@@ -147,7 +147,7 @@ src
 你提供的 HTML 文件中所有静态资源的路径都遵循这个规则：
 
 * `@{/admin_theme/vendor/fontawesome-free/css/all.min.css}` 对应 `static/admin_theme/vendor/fontawesome-free/css/all.min.css`
-* `@{/admin_theme/img/undraw_profile.svg}` 对应 `static/admin_theme/img/undraw_profile.svg`
+* `@{/img/undraw_profile.png}` 对应 `static/img/undraw_profile.png`
 
 ---
 

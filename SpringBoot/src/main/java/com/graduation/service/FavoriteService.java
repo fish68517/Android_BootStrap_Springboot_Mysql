@@ -36,4 +36,18 @@ public interface FavoriteService {
      * @return true表示已收藏，false表示未收藏
      */
     boolean isFavorited(Integer userId, Integer gameId);
+    
+    /**
+     * 获取所有收藏记录
+     * 用于管理员查看
+     * @return 所有收藏记录列表
+     */
+    List<com.graduation.entity.UserFavorites> getAllFavorites();
+    
+    /**
+     * 管理员删除收藏记录
+     * @param userId 用户ID
+     * @param gameId 游戏ID
+     */
+    void removeFavorite(Integer userId, Integer gameId);
 }
