@@ -165,13 +165,17 @@
                                 <i class="bi bi-x-circle"></i> 拒绝申请
                             </button>
                         </form>
-                        
-                        <a th:if="${gameMap.containsKey(request.gameId)}"
-                           th:href="@{/game/detail/{id}(id=${request.gameId})}" 
-                           class="btn btn-outline-primary w-100 mt-2"
-                           target="_blank">
-                            <i class="bi bi-eye"></i> 查看游戏
-                        </a>
+
+                        <div class="mt-2" hidden="hidden">
+                            <a th:if="${gameMap.containsKey(request.gameId)}"
+                               th:href="@{/admin/game/{id}(id=${request.gameId})}"
+                               class="btn btn-outline-primary w-100 mt-2"
+                               target="_blank">
+                                <i class="bi bi-eye"></i> 查看游戏
+                            </a>
+
+                        </div>
+
                     </div>
                 </div>
             </div>
