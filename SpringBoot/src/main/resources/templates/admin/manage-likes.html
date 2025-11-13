@@ -55,7 +55,6 @@
                                             <th>评论内容</th>
                                             <th>所属游戏</th>
                                             <th>点赞时间</th>
-                                            <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -80,7 +79,7 @@
                                                       class="text-muted">游戏已删除</span>
                                             </td>
                                             <td th:text="${#temporals.format(like.likedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                            <td>
+                                            <td hidden="hidden">
                                                 <button class="btn btn-danger btn-sm"
                                                         th:onclick="'deleteLike(' + ${like.userId} + ', ' + ${like.commentId} + ')'">
                                                     <i class="fas fa-trash"></i> 删除
@@ -99,15 +98,7 @@
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; 游戏推荐平台 2025</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+
 
         </div>
         <!-- End of Content Wrapper -->

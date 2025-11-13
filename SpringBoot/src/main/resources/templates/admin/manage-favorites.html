@@ -19,20 +19,15 @@
     <link th:href="@{/admin_theme/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
 </head>
 
-<body layout:fragment="content">
+<div layout:fragment="content">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
-
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
             <div id="content">
-
-
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -54,7 +49,6 @@
                                             <th>用户</th>
                                             <th>游戏</th>
                                             <th>收藏时间</th>
-                                            <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -72,7 +66,7 @@
                                                       class="text-muted">游戏已删除</span>
                                             </td>
                                             <td th:text="${#temporals.format(favorite.favoritedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                                            <td>
+                                            <td hidden="hidden">
                                                 <button class="btn btn-danger btn-sm"
                                                         th:onclick="'deleteFavorite(' + ${favorite.userId} + ', ' + ${favorite.gameId} + ')'">
                                                     <i class="fas fa-trash"></i> 删除
@@ -91,15 +85,7 @@
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; 游戏推荐平台 2025</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+
 
         </div>
         <!-- End of Content Wrapper -->
@@ -164,6 +150,6 @@
         }
     </script>
 
-</body>
+</div>
 
 </html>
