@@ -47,7 +47,7 @@ public class UserService {
         user.setUsername(dto.getUsername());
         user.setPasswordHash(PasswordUtil.encode(dto.getPassword()));
         user.setNickname(dto.getNickname() != null ? dto.getNickname() : dto.getUsername());
-        user.setRole("user"); // 默认角色为普通用户
+        user.setRole(dto.getRole() != null ? dto.getRole() :"user"); // 默认角色为普通用户
         user.setCreatedAt(LocalDateTime.now());
 
         // 保存到数据库
@@ -68,6 +68,11 @@ public class UserService {
     public Users login(UserLoginDTO dto) {
         // 查询用户
         Users user = usersMapper.selectByUsername(dto.getUsername());
+        // 打印
+        System.out.println("用户名：" + user.getUsername());
+        System.out.println("密码：" + dto.getPassword());
+        System.out.println("角色：" + user.getRole());
+
         if (user == null) {
             throw new UserNotFoundException("username", dto.getUsername());
         }
@@ -75,6 +80,11 @@ public class UserService {
         // 验证密码
         if (!PasswordUtil.matches(dto.getPassword(), user.getPasswordHash())) {
             throw new UnauthorizedException("用户名或密码错误");
+        }
+
+        // 验证角色
+        if (!user.getRole().equals(dto.getRole())) {
+            throw new UnauthorizedException("用户角色错误");
         }
 
         return user;

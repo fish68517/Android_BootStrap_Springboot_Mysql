@@ -76,8 +76,9 @@
                     <li class="nav-item" th:if="${session.currentUser != null}">
                         <a class="nav-link" th:href="@{/favorite/list}">我的收藏</a>
                     </li>
-                    <li class="nav-item" th:if="${session.currentUser != null}">
-                        <a class="nav-link" th:href="@{/game/my-games}">我的游戏</a>
+                     <!--增加判断登录角色是否是发布者判断-->
+                    <li class="nav-item" th:if="${session.currentUser != null and session.currentUser.role == 'publisher'}">
+                        <a class="nav-link" th:href="@{/game/add}">发布游戏</a>
                     </li>
                     <li class="nav-item" th:if="${session.currentUser != null}">
                         <a class="nav-link" th:href="@{/user/profile}">个人中心</a>

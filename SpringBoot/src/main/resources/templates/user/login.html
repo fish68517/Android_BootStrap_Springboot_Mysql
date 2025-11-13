@@ -88,6 +88,16 @@
                         </div>
                     </div>
 
+                    <!--添加注册类型：发布者，用户，管理员-->
+                    <div class="mb-3" hidden="hidden">
+                        <label for="role" class="form-label">登录类型</label>
+                        <select class="form-select" id="role" th:field="*{role}">
+                            <option value="publisher">发布者</option>
+                            <option value="user">用户</option>
+                            <option value="admin">管理员</option>
+                        </select>
+                    </div>
+
                     <div class="d-grid gap-2 mb-3">
                         <button type="submit" class="btn btn-primary btn-lg">登录</button>
                     </div>

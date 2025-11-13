@@ -85,7 +85,7 @@ public class UserController {
 
     /**
      * 处理用户登录
-     * 注意：实际的认证由Spring Security处理
+     * 注意：实际的认证由Spring Security 处理
      * 这个方法主要用于显示登录表单和处理登录错误
      */
     @PostMapping("/login")
@@ -98,6 +98,10 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "user/login";
         }
+
+        System.out.println(" login 用户名：" + dto.getUsername());
+        System.out.println("密码：" + dto.getPassword());
+        System.out.println("角色：" + dto.getRole());
 
         try {
             // 验证登录（用于自定义验证逻辑）
@@ -196,6 +200,9 @@ public class UserController {
             session.setAttribute("currentUser", refreshedUser);
             
             redirectAttributes.addFlashAttribute("successMessage", "资料更新成功！");
+            if ("admin".equals(currentUser.getRole())) {
+                return "redirect:/admin/dashboard";
+            }
             return "redirect:/user/profile";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "更新失败：" + e.getMessage());

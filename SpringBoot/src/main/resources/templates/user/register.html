@@ -95,19 +95,21 @@
                         </div>
                     </div>
 
-                    <div class="d-grid gap-2 mb-3">
-                        <button type="submit" class="btn btn-primary btn-lg">注册</button>
-                    </div>
-
                     <!--添加注册类型：发布者，用户，管理员-->
                     <div class="mb-3">
-                        <label for="type" class="form-label">注册类型</label>
-                        <select class="form-select" id="type" th:field="*{type}">
+                        <label for="role" class="form-label">注册类型</label>
+                        <select class="form-select" id="role" th:field="*{role}">
                             <option value="publisher">发布者</option>
                             <option value="user">用户</option>
                             <option value="admin">管理员</option>
                         </select>
                     </div>
+
+
+                    <div class="d-grid gap-2 mb-3">
+                        <button type="submit" class="btn btn-primary btn-lg">注册</button>
+                    </div>
+
 
                     <div class="text-center">
                         <span class="text-muted">已有账号？</span>

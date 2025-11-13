@@ -9,6 +9,7 @@ import com.graduation.service.GamesService;
 import com.graduation.service.RecommendationsService;
 import com.graduation.service.UsersService;
 import com.graduation.service.WithdrawalService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -183,11 +184,21 @@ public class AdminController {
         return "admin/likes";
     }
 
+
     /**
-     * 5. 显示个人中心页面
+     * 显示个人资料页面
      */
     @GetMapping("/profile")
-    public String showProfile() {
+    public String showProfile(HttpSession session, Model model) {
+        // 检查是否登录
+        Users currentUser = (Users) session.getAttribute("currentUser");
+        if (currentUser == null) {
+            return "redirect:/admin/login";
+        }
+
+        // 获取最新的用户信息
+        Users user = userService.getUserById(currentUser.getUserId());
+        model.addAttribute("user", user);
         return "admin/profile";
     }
     
