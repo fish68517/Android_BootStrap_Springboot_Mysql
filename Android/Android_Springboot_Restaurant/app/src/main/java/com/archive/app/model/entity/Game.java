@@ -1,45 +1,47 @@
 package com.archive.app.model.entity;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 游戏实体
  * 对应: games 表
  */
-public class Game {
+public class Game implements Serializable {
 
-    @SerializedName("game_id")
+
     private int gameId;
 
-    @SerializedName("publisher_id")
+
     private int publisherId;
 
-    @SerializedName("title")
+
     private String title;
 
-    @SerializedName("description")
+
     private String description;
 
-    @SerializedName("cover_image_url")
+
     private String coverImageUrl;
 
-    @SerializedName("other_image_urls")
+
     private String otherImageUrls;
 
-    @SerializedName("status")
+
     private String status;
 
-    @SerializedName("submitted_at")
+
     private Date submittedAt;
 
-    @SerializedName("reviewed_by_admin_id")
+
     private Integer reviewedByAdminId;
 
-    @SerializedName("reviewed_at")
+
     private Date reviewedAt;
 
-    @SerializedName("category")
+
     private String category;
 
 
@@ -130,5 +132,22 @@ public class Game {
 
     public void setReviewedAt(Date reviewedAt) {
         this.reviewedAt = reviewedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "gameId=" + gameId +
+                ", publisherId=" + publisherId +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", coverImageUrl='" + coverImageUrl + '\'' +
+                ", otherImageUrls='" + otherImageUrls + '\'' +
+                ", status='" + status + '\'' +
+                ", submittedAt=" + submittedAt +
+                ", reviewedByAdminId=" + reviewedByAdminId +
+                ", reviewedAt=" + reviewedAt +
+                ", category='" + category + '\'' +
+                '}';
     }
 }

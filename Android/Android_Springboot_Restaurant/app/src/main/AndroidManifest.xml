@@ -60,6 +60,10 @@
             android:exported="true">
         </activity>
 
+        <activity android:name="com.archive.app.view.activity.GameDetailActivity"
+            android:exported="true">
+        </activity>
+
 
         <activity android:name="com.archive.app.view.activity.SplashActivity"
             android:exported="true">

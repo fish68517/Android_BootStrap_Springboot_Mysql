@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.archive.app.R;
+import com.archive.app.RetrofitClient;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -54,6 +55,17 @@ public class ImageLoaderUtil {
             }
         } else if (!imageUrl.startsWith("http")) {
             // 直接用 imageUrl 作为 drawable 名称
+            if (true) {
+                // 默认用 Glide 加载网络图片
+                System.out.println("load image: " + imageUrl);
+                String imageUrlNew = RetrofitClient.BASE_URL_Image + imageUrl;
+                Glide.with(context)
+                        .load(imageUrlNew)
+                        .apply(new RequestOptions().placeholder(R.drawable.ic_launcher_background)
+                                .error(R.drawable.ic_launcher_background))
+                        .into(imageView);
+                return;
+            }
             int resId = context.getResources().getIdentifier(imageUrl.toLowerCase(), "drawable", context.getPackageName());
             if (resId != 0) {
                 imageView.setImageResource(resId);

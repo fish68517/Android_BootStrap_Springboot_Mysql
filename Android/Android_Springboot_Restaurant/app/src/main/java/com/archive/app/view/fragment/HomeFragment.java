@@ -1,5 +1,6 @@
 package com.archive.app.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.archive.app.adapter.CategoryAdapter;
 import com.archive.app.adapter.GameAdapter;
 import com.archive.app.model.GameCategory;
 import com.archive.app.model.entity.Game;
+import com.archive.app.view.activity.GameDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +105,7 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
     }
 
     private void loadCategories() {
-        // 假设 /api/game/categories 返回 "RPG", "Strategy" 等
+       /* // 假设 /api/game/categories 返回 "RPG", "Strategy" 等
         apiService.getGameCategories().enqueue(new Callback<List<GameCategory>>() {
             @Override
             public void onResponse(Call<List<GameCategory>> call, Response<List<GameCategory>> response) {
@@ -116,7 +118,15 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
             public void onFailure(Call<List<GameCategory>> call, Throwable t) {
                 // 加载分类失败 (非关键)
             }
-        });
+        });*/
+        categoryList.clear();
+        categoryList.add(new GameCategory("全部"));
+
+        categoryList.add(new GameCategory("动作类"));
+        categoryList.add(new GameCategory("角色扮演"));
+        categoryList.add(new GameCategory("策略类"));
+        categoryList.add(new GameCategory("竞技类"));
+        categoryList.add(new GameCategory("卡牌类"));
     }
 
     private void loadGames() {
@@ -153,8 +163,8 @@ public class HomeFragment extends Fragment implements CategoryAdapter.OnCategory
         // 点击游戏卡片时
         Toast.makeText(getContext(), "点击了: " + game.getTitle(), Toast.LENGTH_SHORT).show();
         // TODO: 跳转到游戏详情页
-        // Intent intent = new Intent(getActivity(), GameDetailActivity.class);
-        // intent.putExtra("GAME_ID", game.getGameId());
-        // startActivity(intent);
+         Intent intent = new Intent(getActivity(), GameDetailActivity.class);
+         intent.putExtra("GAME_ID", game.getGameId());
+         startActivity(intent);
     }
 }

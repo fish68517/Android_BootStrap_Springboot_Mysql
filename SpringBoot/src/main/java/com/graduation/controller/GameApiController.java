@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -28,12 +29,25 @@ public class GameApiController {
      *
      */
     @GetMapping("/list")
-    public ResponseEntity<List<Games>> getAllGames() {
-     /*   LambdaQueryWrapper<Games> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Games::getStatus, "approved"); // 只显示已批准的*/
+    public ResponseEntity<List<Games>> getAllGames(
+            @RequestParam(value = "category", defaultValue = "") String category,
+            @RequestParam(value = "query", defaultValue = "") String query) {
+
         List<Games> games = gameService.getApprovedGames();
+
+        if (!category.isEmpty()) {
+            Iterator<Games> iterator = games.iterator();
+            while (iterator.hasNext()) {
+                Games game = iterator.next();
+                if (!game.getCategory().equals(category)) {
+                    iterator.remove();
+                }
+            }
+        }
+
         return ResponseEntity.ok(games);
     }
+
 
     /**
      * 搜索游戏 (API)

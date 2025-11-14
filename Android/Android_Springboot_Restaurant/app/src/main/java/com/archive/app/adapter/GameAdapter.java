@@ -1,6 +1,7 @@
 package com.archive.app.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,10 +50,12 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
     public void onBindViewHolder(@NonNull GameViewHolder holder, int position) {
         Game game = gameList.get(position);
 
+        Log.d("GameAdapter", "onBindViewHolder: " + game.getCoverImageUrl());
+
         holder.tvGameTitle.setText(game.getTitle());
         holder.tvGameCategory.setText(game.getCategory());
         // 截断描述
-        holder.tvGameDescription.setMaxLines(2);
+        holder.tvGameDescription.setMaxLines(3);
         holder.tvGameDescription.setText(game.getDescription());
 
         // 加载图片
