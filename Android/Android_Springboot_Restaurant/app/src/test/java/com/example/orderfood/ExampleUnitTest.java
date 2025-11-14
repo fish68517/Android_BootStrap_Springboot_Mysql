@@ -1,4 +1,4 @@
-package com.example.orderfood;
+package com.gameplatform;
 
 import org.junit.Test;
 

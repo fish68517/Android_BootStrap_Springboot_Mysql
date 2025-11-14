@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="@dimen/spacing_xl">
+
+    <ImageView
+        android:id="@+id/iv_no_network_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_no_network"
+        android:tint="@color/text_disabled"
+        android:contentDescription="@string/no_network_icon" />
+
+    <TextView
+        android:id="@+id/tv_no_network_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_lg"
+        android:text="@string/no_network_title"
+        android:textSize="@dimen/text_headline6"
+        android:textColor="@color/text_high_emphasis"
+        android:textStyle="bold"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/tv_no_network_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_sm"
+        android:text="@string/no_network_message"
+        android:textSize="@dimen/text_body1"
+        android:textColor="@color/text_medium_emphasis"
+        android:gravity="center"
+        android:maxWidth="280dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_no_network_retry"
+        style="@style/Widget.App.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_lg"
+        android:text="@string/retry"
+        android:minWidth="120dp" />
+
+</LinearLayout>

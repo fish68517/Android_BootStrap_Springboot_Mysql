@@ -1,3 +1,141 @@
 <resources>
-    <string name="app_name">OrderFood</string>
+    <string name="app_name">游戏平台</string>
+    <string name="app_logo">应用图标</string>
+
+    <!-- Auth related strings -->
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="hint_phone_number">请输入手机号</string>
+    <string name="hint_verification_code">请输入验证码</string>
+    <string name="hint_nickname">请输入昵称</string>
+    <string name="send_code">获取验证码</string>
+    <string name="resend_code">重新发送</string>
+    <string name="countdown_format">%d秒后重发</string>
+
+    <!-- Terms and privacy -->
+    <string name="login_terms">登录即表示您同意《用户协议》和《隐私政策》</string>
+    <string name="register_terms">注册即表示您同意《用户协议》和《隐私政策》</string>
+
+    <!-- Error messages -->
+    <string name="error_phone_empty">请输入手机号</string>
+    <string name="error_phone_invalid">请输入正确的手机号</string>
+    <string name="error_code_empty">请输入验证码</string>
+    <string name="error_code_invalid">验证码格式不正确</string>
+    <string name="error_nickname_empty">请输入昵称</string>
+    <string name="error_nickname_invalid">昵称长度应为2-20个字符</string>
+    <string name="error_network">网络连接失败，请检查网络设置</string>
+    <string name="error_server">服务器异常，请稍后重试</string>
+    <string name="error_code_send_failed">验证码发送失败</string>
+    <string name="error_code_expired">验证码已过期，请重新获取</string>
+    <string name="error_code_wrong">验证码错误</string>
+    <string name="error_code_max_attempts">验证码错误次数过多，请稍后重试</string>
+    <string name="error_phone_registered">该手机号已注册，请直接登录</string>
+    <string name="error_phone_not_registered">该手机号未注册，请先注册</string>
+
+    <!-- Success messages -->
+    <string name="success_code_sent">验证码已发送</string>
+    <string name="success_login">登录成功</string>
+    <string name="success_register">注册成功</string>
+
+    <!-- Navigation -->
+    <string name="nav_games">游戏</string>
+    <string name="nav_favorites">收藏</string>
+    <string name="nav_profile">我的</string>
+
+    <!-- Game list -->
+    <string name="empty_game_list">暂无游戏</string>
+    <string name="loading_games">加载中...</string>
+    <string name="load_more_games">加载更多</string>
+    <string name="no_more_games">没有更多游戏了</string>
+    <string name="refresh_games">下拉刷新</string>
+    <string name="comment_count_format">%d 评论</string>
+    <string name="category_all">全部</string>
+    <string name="category_action">动作</string>
+    <string name="category_adventure">冒险</string>
+    <string name="category_puzzle">益智</string>
+    <string name="category_strategy">策略</string>
+    <string name="category_simulation">模拟</string>
+    <string name="category_sports">体育</string>
+    <string name="category_racing">竞速</string>
+
+    <!-- Game detail -->
+    <string name="game_description">游戏介绍</string>
+    <string name="comments">评论</string>
+    <string name="write_comment">写评论...</string>
+    <string name="submit_comment">发表</string>
+    <string name="add_to_favorites">收藏</string>
+    <string name="remove_from_favorites">取消收藏</string>
+    <string name="favorited">已收藏</string>
+    <string name="like">点赞</string>
+    <string name="liked">已点赞</string>
+    <string name="comment_empty">请输入评论内容</string>
+    <string name="comment_success">评论发表成功</string>
+    <string name="favorite_success">收藏成功</string>
+    <string name="unfavorite_success">取消收藏成功</string>
+    <string name="like_success">点赞成功</string>
+    <string name="unlike_success">取消点赞成功</string>
+    <string name="empty_comments">暂无评论，快来抢沙发吧！</string>
+
+    <!-- Favorites -->
+    <string name="empty_favorite_list">还没有收藏的游戏</string>
+    <string name="empty_favorite_hint">去发现一些有趣的游戏吧</string>
+    <string name="discover_games">发现游戏</string>
+    <string name="remove_favorite_title">取消收藏</string>
+    <string name="remove_favorite_message">确定要取消收藏这个游戏吗？</string>
+    <string name="remove_favorite_confirm">确定</string>
+    <string name="remove_favorite_cancel">取消</string>
+    <string name="favorite_removed">已取消收藏</string>
+    <string name="loading_favorites">加载收藏中...</string>
+    <string name="refresh_favorites">下拉刷新</string>
+
+    <!-- Profile -->
+    <string name="edit_nickname">编辑昵称</string>
+    <string name="my_favorites">我的收藏</string>
+    <string name="my_comments">我的评论</string>
+    <string name="settings">设置</string>
+    <string name="about">关于我们</string>
+    <string name="logout">退出登录</string>
+    <string name="arrow_right">右箭头</string>
+    <string name="register_time_format">注册时间：%s</string>
+    <string name="phone_format">%s****%s</string>
+
+    <!-- Nickname Edit Dialog -->
+    <string name="edit_nickname_title">修改昵称</string>
+    <string name="edit_nickname_hint">请输入新昵称</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="nickname_update_success">昵称修改成功</string>
+    <string name="nickname_update_failed">昵称修改失败</string>
+
+    <!-- Avatar Selection -->
+    <string name="select_avatar">选择头像</string>
+    <string name="camera">拍照</string>
+    <string name="gallery">从相册选择</string>
+    <string name="avatar_update_success">头像更新成功</string>
+    <string name="avatar_update_failed">头像更新失败</string>
+
+    <!-- Logout Confirmation -->
+    <string name="logout_title">退出登录</string>
+    <string name="logout_message">确定要退出登录吗？</string>
+    <string name="logout_success">已退出登录</string>
+
+    <!-- Splash Screen -->
+    <string name="splash_initializing">正在初始化...</string>
+    <string name="splash_checking_network">检查网络连接...</string>
+    <string name="splash_loading_cache">加载缓存数据...</string>
+    <string name="splash_preparing_ui">准备界面...</string>
+    <string name="splash_ready">准备就绪</string>
+
+    <!-- Loading States -->
+    <string name="retry">重试</string>
+    <string name="error_icon">错误图标</string>
+    <string name="error_title">加载失败</string>
+    <string name="error_message">请检查网络连接后重试</string>
+    <string name="empty_icon">空状态图标</string>
+    <string name="empty_title">暂无内容</string>
+    <string name="empty_message">还没有找到相关内容</string>
+    <string name="no_network_icon">无网络图标</string>
+    <string name="no_network_title">网络连接失败</string>
+    <string name="no_network_message">请检查网络设置后重试</string>
+
 </resources>
