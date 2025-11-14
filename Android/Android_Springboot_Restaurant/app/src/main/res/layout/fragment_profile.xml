@@ -1,90 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f5f5f5">
+    android:orientation="vertical"
+    android:background="#F5F5F5"
+    tools:context=".view.fragment.ProfileFragment">
 
-    <ScrollView
-        android:id="@+id/layout_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible">
+        android:layout_height="200dp"
+        android:background="@drawable/bg_profile_header">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/ic_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_marginTop="16dp"
+            android:text="Username"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_avatar" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="user@example.com"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_username" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal"
-                    android:padding="24dp">
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <ImageView
-                        android:id="@+id/image_view_avatar"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        tools:src="@mipmap/ic_launcher" />
-
-                    <TextView
-                        android:id="@+id/text_view_nickname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/black"
-                        tools:text="张伟" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:id="@+id/text_view_email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_home"
-                        android:drawablePadding="16dp"
-                        android:gravity="center_vertical"
-                        tools:text="邮箱：zhangwei@university.edu.cn"/>
-
-                    <TextView
-                        android:id="@+id/text_view_school_id"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:drawableStart="@drawable/ic_home"
-                        android:drawablePadding="16dp"
-                        android:gravity="center_vertical"
-                        tools:text="学号：20210001"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-        </LinearLayout>
-    </ScrollView>
-
-    <ProgressBar
-        android:id="@+id/progress_bar_profile"
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_profile_menu"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_marginTop="16dp"
+        android:background="@android:color/white"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_profile_menu" />
 
-</FrameLayout>
+</LinearLayout>

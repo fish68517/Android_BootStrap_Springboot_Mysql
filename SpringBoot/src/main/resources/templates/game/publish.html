@@ -95,6 +95,24 @@
                             </div>
                         </div>
 
+                        <!--增游戏分类-->
+                        <div class="mb-3">
+                            <label for="category" class="form-label">
+                                游戏分类 <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select"
+                                    id="category"
+                                    th:field="*{category}"
+                                    required>
+                                <option value="">请选择游戏分类</option>
+                                <option value="动作类">动作类</option>
+                                <option value="角色扮演">角色扮演</option>
+                                <option value="策略">策略类</option>
+                                <option value="竞技">竞技类</option>
+                                <option value="卡牌">卡牌类</option>
+                            </select>
+                        </div>
+
                         <div class="mb-3">
                             <label for="description" class="form-label">
                                 游戏描述 <span class="text-danger">*</span>

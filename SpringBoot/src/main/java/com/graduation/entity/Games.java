@@ -68,4 +68,6 @@ public class Games implements Serializable {
      * 审核时间
      */
     private LocalDateTime reviewedAt;
+
+    private String category;
 }

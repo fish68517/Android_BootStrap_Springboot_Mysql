@@ -78,7 +78,7 @@
                     </li>
                      <!--增加判断登录角色是否是发布者判断-->
                     <li class="nav-item" th:if="${session.currentUser != null and session.currentUser.role == 'publisher'}">
-                        <a class="nav-link" th:href="@{/game/add}">发布游戏</a>
+                        <a class="nav-link" th:href="@{/game/publish}">发布游戏</a>
                     </li>
                     <li class="nav-item" th:if="${session.currentUser != null}">
                         <a class="nav-link" th:href="@{/user/profile}">个人中心</a>

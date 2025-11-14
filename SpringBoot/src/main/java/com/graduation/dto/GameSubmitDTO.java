@@ -36,4 +36,6 @@ public class GameSubmitDTO {
      */
     @Size(max = 2000, message = "其他图片URLs长度不能超过2000个字符")
     private String otherImageUrls;
+
+    private String category;
 }

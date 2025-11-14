@@ -1,4 +1,5 @@
 package com.archive.app;
+import com.archive.app.model.GameCategory;
 import com.archive.app.model.dto.CommentPostDTO;
 import com.archive.app.model.dto.FavoriteRequestDTO;
 import com.archive.app.model.dto.PreferencesSaveDTO;
@@ -34,14 +35,14 @@ public interface ApiService {
      * 用户登录
      * @param loginDTO 包含用户名和密码
      */
-    @POST("/api/api/user/login")
+    @POST("/api/user/login")
     Call<User> login(@Body UserLoginDTO loginDTO);
 
     /**
      * 用户注册
      * @param registerDTO 包含注册信息
      */
-    @POST("/api/api/user/register")
+    @POST("/api/user/register")
     Call<Boolean> register(@Body UserRegisterDTO registerDTO);
 
     /**
@@ -54,28 +55,28 @@ public interface ApiService {
      * 获取用户个人资料 (假设的 JSON 接口)
      * (UserController.java 中的 /api/user/profile 是网页)
      */
-    @GET("/api/api/user/profile") // 假设这是JSON API路径
+    @GET("/api/user/profile") // 假设这是JSON API路径
     Call<User> getProfile();
 
     /**
      * 更新用户个人资料 (假设的 JSON 接口)
      * (UserController.java 中的 /api/user/profile/update 是网页)
      */
-    @POST("/api/api/user/profile/update") // 假设这是JSON API路径
+    @POST("/api/user/profile/update") // 假设这是JSON API路径
     Call<User> updateProfile(@Body User user);
 
     /**
      * 获取所有可选偏好 (假设的 JSON 接口)
      * (UserController.java 中的 /api/user/preferences 是网页)
      */
-    @GET("/api/api/user/preferences") // 假设这是JSON API路径
+    @GET("/api/user/preferences") // 假设这是JSON API路径
     Call<List<Preference>> getAllPreferences();
 
     /**
      * 保存用户偏好 (假设的 JSON 接口)
      * (UserController.java 中的 /api/user/preferences/save 是网页)
      */
-    @POST("/api/api/user/preferences/save") // 假设这是JSON API路径
+    @POST("/api/user/preferences/save") // 假设这是JSON API路径
     Call<ApiResponse> savePreferences(@Body PreferencesSaveDTO preferencesSaveDTO);
 
 
@@ -96,6 +97,21 @@ public interface ApiService {
      */
     @GET("/api/game/search") // 假设这是JSON API路径
     Call<List<Game>> searchGames(@Query("query") String query);
+
+
+    /**
+     * 【新增】获取所有游戏分类
+     */
+    @GET("/api/game/categories") // 假设后端提供了此接口
+    Call<List<GameCategory>> getGameCategories();
+
+    /**
+     * 【新增】按分类和搜索词获取游戏列表
+     * @param category 分类名 (例如 "RPG", "全部")
+     * @param query 搜索词 (可为空)
+     */
+    @GET("/api/game/list") // 对应后端 GameApiController
+    Call<List<Game>> getGames(@Query("category") String category, @Query("query") String query);
 
     /**
      * 获取游戏详情 (假设的 JSON 接口)
@@ -144,7 +160,7 @@ public interface ApiService {
 
     /**
      * 获取我的收藏列表 (假设的 JSON 接口)
-     * (FavoriteController.java 中的 /api/api/favorite/list 是网页)
+     * (FavoriteController.java 中的 /api/favorite/list 是网页)
      */
     @GET("/api/favorite/list") // 假设这是JSON API路径
     Call<List<Game>> getMyFavorites();

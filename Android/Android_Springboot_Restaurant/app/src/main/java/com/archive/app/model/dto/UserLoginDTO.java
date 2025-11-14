@@ -9,6 +9,16 @@ public class UserLoginDTO {
     private String username;
     private String password;
 
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public UserLoginDTO(String username, String password) {
         this.username = username;
         this.password = password;

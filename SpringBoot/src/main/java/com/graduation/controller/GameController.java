@@ -310,13 +310,19 @@ public class GameController {
         for (Games game : games) {
             List<com.graduation.entity.WithdrawalRequests> requests = withdrawalService.getWithdrawalRequestsByGameId(game.getGameId());
             // 只显示最新的待审核撤回申请
-            for (com.graduation.entity.WithdrawalRequests request : requests) {
-                if ("pending".equals(request.getStatus())) {
-                    withdrawalRequests.put(game.getGameId(), request);
-                    break;
+            System.out.println("requests: " + requests.size());
+            if (requests != null &&!requests.isEmpty()) {
+                for (com.graduation.entity.WithdrawalRequests request : requests) {
+                    System.out.println("request: " + request.getStatus());
+                    if ("pending".equals(request.getStatus())) {
+                        withdrawalRequests.put(game.getGameId(), request);
+                        break;
+                    }
                 }
             }
+
         }
+        System.out.println("withdrawalRequests: " + withdrawalRequests);
         model.addAttribute("withdrawalRequests", withdrawalRequests);
         
         return "game/my-games";

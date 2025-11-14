@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class UserApiController {
     @PostMapping("/login")
     public ResponseEntity<Users> login(@Valid @RequestBody UserLoginDTO userLoginDTO, HttpSession session) {
         // userService.login 会在失败时抛出异常，由 ApiExceptionHandler 捕获
+        System.out.println("用户登录");
         Users user = userService.login(userLoginDTO);
         session.setAttribute("currentUser", user); // 关键：为后续请求建立会话
         return ResponseEntity.ok(user);

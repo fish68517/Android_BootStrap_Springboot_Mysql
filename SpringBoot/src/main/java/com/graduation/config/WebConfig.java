@@ -76,6 +76,11 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authenticationInterceptor)
                 .addPathPatterns("/**")
+                // =======================================================
+                // 【【【关键修改：排除所有 API 请求】】】
+                // 告诉拦截器不要管 /api/ 开头的任何请求
+                // API 的安全由 SecurityConfig 中的 apiSecurityFilterChain 负责
+                .excludePathPatterns("/api/**")
                 .excludePathPatterns(
                     "/user/register",
                     "/user/login",

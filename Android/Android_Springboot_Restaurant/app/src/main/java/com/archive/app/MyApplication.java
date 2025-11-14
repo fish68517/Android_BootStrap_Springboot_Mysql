@@ -1,9 +1,11 @@
 package com.archive.app;
 
 import android.content.Context;
+import android.content.Intent;
 
+import com.archive.app.model.entity.User;
+import com.archive.app.view.activity.LoginActivity;
 
-import com.archive.app.model.User;
 
 public class MyApplication extends android.app.Application{
 
@@ -21,6 +23,10 @@ public class MyApplication extends android.app.Application{
         curUser = user;
     }
 
+    public static User getUser() {
+        return curUser;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -32,5 +38,9 @@ public class MyApplication extends android.app.Application{
     }
 
 
-
+    public void logout() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
 }

@@ -1,6 +1,5 @@
 package com.graduation.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.graduation.dto.GameSubmitDTO;
 import com.graduation.entity.Games;
 import com.graduation.exception.GameNotFoundException;
@@ -33,6 +32,7 @@ public class GameServiceImpl implements GameService {
         game.setDescription(dto.getDescription());
         game.setCoverImageUrl(dto.getCoverImageUrl());
         game.setOtherImageUrls(dto.getOtherImageUrls());
+        game.setCategory(dto.getCategory());
         game.setStatus("pending");
         game.setSubmittedAt(LocalDateTime.now());
         

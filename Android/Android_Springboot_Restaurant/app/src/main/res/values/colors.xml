@@ -34,6 +34,11 @@
     <color name="surface">#FFFFFF</color>
     <color name="error">#B00020</color>
 
+    <color name="teal_primary">#4DB6AC</color>
+
+    <color name="grey_text">#888888</color>
+
+
     <!-- Text colors on primary/secondary -->
     <color name="on_primary">#FFFFFF</color>
     <color name="on_secondary">#000000</color>

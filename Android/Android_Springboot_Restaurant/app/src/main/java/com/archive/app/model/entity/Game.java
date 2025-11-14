@@ -39,6 +39,18 @@ public class Game {
     @SerializedName("reviewed_at")
     private Date reviewedAt;
 
+    @SerializedName("category")
+    private String category;
+
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     // Getters and Setters
     public int getGameId() {
         return gameId;
