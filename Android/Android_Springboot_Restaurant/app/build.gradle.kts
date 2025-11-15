@@ -48,6 +48,13 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.fragment:fragment:1.8.1")
 
+    // RxJava 3
+    implementation("io.reactivex.rxjava3:rxjava:3.1.5")
+    implementation("io.reactivex.rxjava3:rxandroid:3.0.0")
+// Retrofit RxJava 3 Adapter
+// 确保你的 Retrofit 版本和这个适配器兼容 (通常是 Retrofit 2.6.0+
+    implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
+
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")

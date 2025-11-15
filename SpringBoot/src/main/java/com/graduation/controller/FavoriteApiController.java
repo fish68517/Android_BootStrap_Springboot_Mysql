@@ -25,12 +25,9 @@ public class FavoriteApiController {
      *
      */
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> addFavorite(@RequestBody FavoriteRequestDTO request, HttpSession session) {
-        Users currentUser = (Users) session.getAttribute("currentUser");
-        if (currentUser == null) {
-            throw new UnauthorizedException("用户未登录");
-        }
-        favoriteService.favoriteGame(currentUser.getUserId(), request.getGameId());
+    public ResponseEntity<ApiResponse> addFavorite(@RequestBody FavoriteRequestDTO request) {
+
+        favoriteService.favoriteGame(request.getUserId(), request.getGameId());
         return ResponseEntity.ok(ApiResponse.success("收藏成功"));
     }
 
@@ -39,12 +36,9 @@ public class FavoriteApiController {
      *
      */
     @PostMapping("/remove")
-    public ResponseEntity<ApiResponse> removeFavorite(@RequestBody FavoriteRequestDTO request, HttpSession session) {
-        Users currentUser = (Users) session.getAttribute("currentUser");
-        if (currentUser == null) {
-            throw new UnauthorizedException("用户未登录");
-        }
-        favoriteService.unfavoriteGame(currentUser.getUserId(), request.getGameId());
+    public ResponseEntity<ApiResponse> removeFavorite(@RequestBody FavoriteRequestDTO request) {
+
+        favoriteService.unfavoriteGame(request.getUserId(), request.getGameId());
         return ResponseEntity.ok(ApiResponse.success("取消收藏成功"));
     }
 
@@ -53,12 +47,19 @@ public class FavoriteApiController {
      *
      */
     @GetMapping("/list")
-    public ResponseEntity<List<Games>> getMyFavorites(HttpSession session) {
-        Users currentUser = (Users) session.getAttribute("currentUser");
-        if (currentUser == null) {
-            throw new UnauthorizedException("用户未登录");
-        }
-        List<Games> favorites = favoriteService.getUserFavorites(currentUser.getUserId());
+    public ResponseEntity<List<Games>> getMyFavorites(@RequestParam Integer userId) {
+
+        List<Games> favorites = favoriteService.getUserFavorites(userId);
         return ResponseEntity.ok(favorites);
+    }
+
+    /**
+     * 检查游戏是否已收藏 (API)
+     *
+     */
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> checkFavorite(@RequestParam Integer gameId, @RequestParam Integer userId) {
+        boolean isFavorited = favoriteService.isFavorited(userId, gameId);
+        return ResponseEntity.ok(isFavorited);
     }
 }

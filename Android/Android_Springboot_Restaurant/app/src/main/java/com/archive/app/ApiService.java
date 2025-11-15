@@ -6,6 +6,7 @@ import com.archive.app.model.dto.PreferencesSaveDTO;
 import com.archive.app.model.dto.UserLoginDTO;
 import com.archive.app.model.dto.UserRegisterDTO;
 import com.archive.app.model.dto.WithdrawalSubmitDTO;
+import com.archive.app.model.entity.Comment;
 import com.archive.app.model.entity.Game;
 import com.archive.app.model.entity.Preference;
 import com.archive.app.model.entity.Recommendation;
@@ -15,8 +16,10 @@ import com.archive.app.model.response.LikeResponse;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -45,6 +48,9 @@ public interface ApiService {
     @POST("/api/user/register")
     Call<Boolean> register(@Body UserRegisterDTO registerDTO);
 
+    @GET("/api/user/list")
+    Call<List<User>> getAllUsers();
+
     /**
      * 用户登出 (假设的 JSON 接口)
      */
@@ -58,12 +64,20 @@ public interface ApiService {
     @GET("/api/user/profile") // 假设这是JSON API路径
     Call<User> getProfile();
 
+    // 删除账号
+    @DELETE("/api/user/delete")
+    Call<Void> deleteAccount(@Query("userId") int userId);
+
     /**
      * 更新用户个人资料 (假设的 JSON 接口)
      * (UserController.java 中的 /api/user/profile/update 是网页)
      */
-    @POST("/api/user/profile/update") // 假设这是JSON API路径
-    Call<User> updateProfile(@Body User user);
+    @POST("/api/user/update") // 假设这是JSON API路径
+    Call<User> updateProfile(@Query("userId") int userId,@Query("nickName") String username,@Query("password") String password);
+
+
+    @POST("/api/user/update/password")
+    Call<User> updateProfilePassword(@Query("username") String username,@Query("password") String password);
 
     /**
      * 获取所有可选偏好 (假设的 JSON 接口)
@@ -119,7 +133,10 @@ public interface ApiService {
      * @param id 游戏ID
      */
     @GET("/api/game/detail/{id}") // 假设这是JSON API路径
-    Call<Game> getGameDetail(@Path("id") int id);
+    Single<Game> getGameDetail(@Path("id") int id);
+
+
+
 
     /**
      * 获取我发布的游戏 (假设的 JSON 接口)
@@ -151,6 +168,9 @@ public interface ApiService {
     @POST("/api/favorite/add")
     Call<ApiResponse> addFavorite(@Body FavoriteRequestDTO favoriteRequestDTO);
 
+    @GET("/api/favorite/check")
+    Call<Boolean> checkFavorite(@Query("gameId") int gameId, @Query("userId") int userId);
+
     /**
      *
      * 取消收藏 (AJAX 接口)
@@ -163,7 +183,7 @@ public interface ApiService {
      * (FavoriteController.java 中的 /api/favorite/list 是网页)
      */
     @GET("/api/favorite/list") // 假设这是JSON API路径
-    Call<List<Game>> getMyFavorites();
+    Call<List<Game>> getMyFavorites(@Query("userId") int userId);
 
 
     //=========================== 4. 评论 (Comment) ===========================
@@ -182,6 +202,10 @@ public interface ApiService {
      */
     @POST("/api/comment/delete/{id}") // 假设这是JSON API路径
     Call<ApiResponse> deleteComment(@Path("id") int id);
+
+    // 根据 gameid 获取评论列表 (假设的 JSON 接口)
+    @GET("/api/comment/list/{gameId}")
+    Single<List<Comment>> getComments(@Path("gameId") int gameId);
 
     /**
      * 点赞评论 (AJAX 接口)

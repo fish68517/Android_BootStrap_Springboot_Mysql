@@ -1,6 +1,5 @@
 package com.archive.app.model.entity;
 
-import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 /**
@@ -9,19 +8,28 @@ import java.util.Date;
  */
 public class User {
 
-    @SerializedName("user_id")
+
     private int userId;
 
-    @SerializedName("username")
+
     private String username;
 
-    @SerializedName("nickname")
+
     private String nickname;
 
-    @SerializedName("role")
+
     private String role;
 
-    @SerializedName("created_at")
+    private String passwordHash;
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
     private Date createdAt;
 
     // Getters and Setters

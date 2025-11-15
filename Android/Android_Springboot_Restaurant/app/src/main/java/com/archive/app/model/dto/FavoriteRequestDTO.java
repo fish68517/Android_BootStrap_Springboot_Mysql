@@ -7,9 +7,19 @@ package com.archive.app.model.dto;
 public class FavoriteRequestDTO {
 
     private Integer gameId;
+    private Integer userId;
 
-    public FavoriteRequestDTO(Integer gameId) {
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public FavoriteRequestDTO(Integer gameId, Integer userId) {
         this.gameId = gameId;
+        this.userId = userId;
     }
 
     // Getters and Setters

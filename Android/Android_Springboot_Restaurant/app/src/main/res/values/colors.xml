@@ -29,6 +29,9 @@
     <color name="secondary_color">#03DAC6</color>
     <color name="secondary_variant">#018786</color>
 
+    <color name="red_favorite">#E53935</color>
+    <color name="gray_medium_emphasis">#8A000000</color> <!-- 54% black -->
+
     <!-- Background colors -->
     <color name="background">#FAFAFA</color>
     <color name="surface">#FFFFFF</color>

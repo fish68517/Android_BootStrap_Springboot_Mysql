@@ -202,4 +202,14 @@ public class CommentService {
     public void removeLike(Integer commentId, Integer userId) {
         commentLikesMapper.deleteByUserIdAndCommentId(userId, commentId);
     }
+
+    // 根据 gameId 获取所有评论
+    public List<Comments> getCommentsByGameId(Integer gameId) {
+        return commentsMapper.getCommentsByGameId(gameId);
+    }
+
+    // 根据 userId 获取所有评论
+    public List<Comments> getCommentsByUserId(Integer userId) {
+        return commentsMapper.getCommentsByUserId(userId);
+    }
 }

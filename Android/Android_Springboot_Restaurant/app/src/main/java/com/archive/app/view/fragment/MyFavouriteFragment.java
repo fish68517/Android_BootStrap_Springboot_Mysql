@@ -1,5 +1,6 @@
 package com.archive.app.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.archive.app.R;
 import com.archive.app.RetrofitClient;
 import com.archive.app.adapter.GameAdapter;
 import com.archive.app.model.entity.Game;
+import com.archive.app.view.activity.GameDetailActivity;
 
 
 import java.util.ArrayList;
@@ -70,7 +72,8 @@ public class MyFavouriteFragment extends Fragment implements GameAdapter.OnGameC
     private void loadFavorites() {
 
 
-        apiService.getMyFavorites().enqueue(new Callback<List<Game>>() {
+        int userId = myApplication.getUser().getUserId();
+        apiService.getMyFavorites(userId).enqueue(new Callback<List<Game>>() {
             @Override
             public void onResponse(Call<List<Game>> call, Response<List<Game>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -98,7 +101,9 @@ public class MyFavouriteFragment extends Fragment implements GameAdapter.OnGameC
 
     @Override
     public void onGameClick(Game game) {
-        Toast.makeText(getContext(), "点击了: " + game.getTitle(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getContext(), GameDetailActivity.class);
+        intent.putExtra("GAME_ID", game.getGameId());
+        startActivity(intent);
         // TODO: 跳转到游戏详情页
     }
 }

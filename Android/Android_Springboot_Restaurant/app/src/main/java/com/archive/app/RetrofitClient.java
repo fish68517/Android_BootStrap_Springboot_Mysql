@@ -9,12 +9,13 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    public static final String BASE_URL = "http://192.168.8.225:8080/";
-    public static final String BASE_URL_Image = "http://192.168.8.225:8080";
+    public static final String BASE_URL = "http://192.168.2.235:8080/";
+    public static final String BASE_URL_Image = "http://192.168.2.235:8080";
 
     private static Retrofit userRetrofit;
     private static Retrofit mainRetrofit;
@@ -45,6 +46,8 @@ public class RetrofitClient {
                         .baseUrl(BASE_URL)
                         .client(getClient())
                         .addConverterFactory(GsonConverterFactory.create(getGson()))
+                        // --- 添加这一行 ---
+                        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                         .build();
             }
             mainApiService = mainRetrofit.create(ApiService.class);

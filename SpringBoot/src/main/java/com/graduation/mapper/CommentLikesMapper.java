@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * <p>
  * 评论点赞表 Mapper 接口
@@ -35,4 +37,6 @@ public interface CommentLikesMapper extends BaseMapper<CommentLikes> {
      */
     @Delete("DELETE FROM comment_likes WHERE user_id = #{userId} AND comment_id = #{commentId}")
     int deleteByUserIdAndCommentId(@Param("userId") Integer userId, @Param("commentId") Integer commentId);
+
+
 }

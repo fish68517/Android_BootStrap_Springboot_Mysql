@@ -23,6 +23,7 @@ import com.archive.app.adapter.ProfileMenuAdapter;
 import com.archive.app.model.ProfileMenuItem;
 import com.archive.app.model.entity.User;
 import com.archive.app.model.response.ApiResponse;
+import com.archive.app.view.activity.ProfileActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ import retrofit2.Response;
 public class ProfileFragment extends Fragment implements ProfileMenuAdapter.OnMenuItemClickListener {
 
     private ImageView ivAvatar;
-    private TextView tvUsername, tvEmail;
+    private TextView tvUsername, tvNickName;
     private RecyclerView rvProfileMenu;
 
     private ApiService apiService;
@@ -49,7 +50,7 @@ public class ProfileFragment extends Fragment implements ProfileMenuAdapter.OnMe
 
         ivAvatar = view.findViewById(R.id.iv_avatar);
         tvUsername = view.findViewById(R.id.tv_username);
-        tvEmail = view.findViewById(R.id.tv_email);
+        tvNickName = view.findViewById(R.id.tv_email);
         rvProfileMenu = view.findViewById(R.id.rv_profile_menu);
 
         apiService = RetrofitClient.getMainApiService(); //
@@ -70,28 +71,28 @@ public class ProfileFragment extends Fragment implements ProfileMenuAdapter.OnMe
         User user = application.getUser();
         if (user != null) {
             tvUsername.setText(user.getNickname() != null ? user.getNickname() : user.getUsername());
-            tvEmail.setText(user.getUsername());
+            tvNickName.setText(user.getNickname());
 
             // 假设用户有头像URL，这里用占位符
             // ImageLoaderUtil.loadImage(getContext(), user.getAvatarUrl(), ivAvatar);
         }
 
         // 也可以选择从API刷新数据
-        apiService.getProfile().enqueue(new Callback<User>() {
+/*        apiService.getProfile().enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     application.setUser(response.body()); // 更新本地存储
                     User freshUser = response.body();
                     tvUsername.setText(freshUser.getNickname() != null ? freshUser.getNickname() : freshUser.getUsername());
-                    tvEmail.setText(freshUser.getUsername());
+                    tvNickName.setText(freshUser.getUsername());
                 }
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 // 刷新失败，使用本地数据
             }
-        });
+        });*/
     }
 
     private void setupMenu() {
@@ -101,7 +102,7 @@ public class ProfileFragment extends Fragment implements ProfileMenuAdapter.OnMe
         // TODO: 替换为您自己的图标资源
         menuItems.add(new ProfileMenuItem("我的信息", R.drawable.ic_launcher_background));
         menuItems.add(new ProfileMenuItem("我的收藏", R.drawable.ic_launcher_background));
-        menuItems.add(new ProfileMenuItem("设置", R.drawable.ic_launcher_background));
+      // menuItems.add(new ProfileMenuItem("设置", R.drawable.ic_launcher_background));
         menuItems.add(new ProfileMenuItem("登出", R.drawable.ic_launcher_background));
 
         menuAdapter = new ProfileMenuAdapter(getContext(), menuItems, this);
@@ -114,12 +115,17 @@ public class ProfileFragment extends Fragment implements ProfileMenuAdapter.OnMe
         if ("登出".equals(title)) {
             handleLogout();
         } else if ("我的收藏".equals(title)) {
-            // TODO: 跳转到收藏页 (如果您是在单独的Activity中)
-            // (如果您是在 MainActivity 的 BottomNav 中, 可以切换 Tab)
-            Toast.makeText(getContext(), "跳转到收藏", Toast.LENGTH_SHORT).show();
+            // TODO: 跳转到收藏页 切换到收藏Fragment
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new MyFavouriteFragment())
+                    .commit();
+
         } else if ("我的信息".equals(title)) {
-            // TODO: 跳转到信息编辑页
-            Toast.makeText(getContext(), "跳转到我的信息", Toast.LENGTH_SHORT).show();
+            // 弹框
+            Intent intent = new Intent(getActivity(), ProfileActivity.class);
+            startActivity(intent);
+
+
         } else if ("设置".equals(title)) {
             // TODO: 跳转到设置页
             Toast.makeText(getContext(), "跳转到设置", Toast.LENGTH_SHORT).show();

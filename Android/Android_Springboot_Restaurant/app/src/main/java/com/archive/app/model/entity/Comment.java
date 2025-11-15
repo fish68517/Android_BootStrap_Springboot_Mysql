@@ -1,33 +1,35 @@
 package com.archive.app.model.entity;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 评论实体
  * 对应: comments 表
  */
-public class Comment {
+public class Comment implements Serializable {
 
-    @SerializedName("comment_id")
+
     private int commentId;
 
-    @SerializedName("game_id")
+
     private int gameId;
 
-    @SerializedName("user_id")
+
     private int userId;
 
-    @SerializedName("content")
+
     private String content;
 
-    @SerializedName("status")
+
     private String status;
 
-    @SerializedName("created_at")
+
     private Date createdAt;
 
-    @SerializedName("reviewed_by_admin_id")
+
     private Integer reviewedByAdminId;
 
     // Getters and Setters

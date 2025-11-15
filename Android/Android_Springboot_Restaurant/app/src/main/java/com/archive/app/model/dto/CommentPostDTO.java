@@ -9,9 +9,20 @@ public class CommentPostDTO {
     private Integer gameId;
     private String content;
 
-    public CommentPostDTO(Integer gameId, String content) {
+    private Integer userId;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public CommentPostDTO(Integer gameId, Integer userId,String content) {
         this.gameId = gameId;
         this.content = content;
+        this.userId = userId;
     }
 
     // Getters and Setters

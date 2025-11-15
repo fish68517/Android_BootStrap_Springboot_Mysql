@@ -4,6 +4,21 @@
 
     <!-- Auth related strings -->
     <string name="login">登录</string>
+
+    <string name="profile_page_title">个人中心</string>
+    <string name="user_information">用户信息</string>
+    <string name="modify_information">修改资料</string>
+    <string name="user_id_label">用户ID</string>
+    <string name="username_label">用户名</string>
+    <string name="nickname_label">昵称</string>
+    <string name="role_label">角色</string>
+    <string name="role_user">普通用户</string>
+    <string name="new_password_label">新密码</string>
+    <string name="password_helper_text">留空则不修改密码</string>
+    <string name="save_changes">保存修改</string>
+    <string name="dangerous_operations">危险操作</string>
+    <string name="delete_account">删除账号</string>
+
     <string name="register">注册</string>
     <string name="hint_phone_number">请输入手机号</string>
     <string name="hint_verification_code">请输入验证码</string>

@@ -6,6 +6,12 @@ import android.content.Intent;
 import com.archive.app.model.entity.User;
 import com.archive.app.view.activity.LoginActivity;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class MyApplication extends android.app.Application{
 
@@ -15,6 +21,8 @@ public class MyApplication extends android.app.Application{
     private static final String TAG = "MyApplication";
     private Context context;
 
+    private ApiService apiService = RetrofitClient.getMainApiService();
+    public static List<User> users;
 
 
     public static void setUser(User user) {
@@ -22,6 +30,7 @@ public class MyApplication extends android.app.Application{
         // save user to shared preferences or database or any other storage
         curUser = user;
     }
+
 
     public static User getUser() {
         return curUser;
@@ -32,8 +41,21 @@ public class MyApplication extends android.app.Application{
         super.onCreate();
         // Initialize your application here
         context = getApplicationContext();
+        apiService.getAllUsers().enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                System.out.println("getAllUsers：" + response.body());
+                if (response.isSuccessful() && response.body() != null) {
+                    users = response.body();
 
+                }
+            }
 
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+
+            }
+        });
 
     }
 

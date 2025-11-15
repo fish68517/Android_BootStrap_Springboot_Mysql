@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 当按钮被选中时，显示填充的爱心 -->
+    <item android:drawable="@drawable/ic_favorite_filled" android:state_checked="true"/>
+
+    <!-- 默认状态（未选中），显示带边框的爱心 -->
+    <item android:drawable="@drawable/ic_favorite" android:state_checked="false"/>
+</selector>

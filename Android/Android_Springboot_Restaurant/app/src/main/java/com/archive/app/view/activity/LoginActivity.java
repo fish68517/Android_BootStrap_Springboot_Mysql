@@ -54,7 +54,13 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         tvForgotPassword.setOnClickListener(v -> {
+            String username = etUsername.getText().toString().trim();
+            if (TextUtils.isEmpty(username)) {
+                Toast.makeText(LoginActivity.this, "请输入用户名，才能重置密码", Toast.LENGTH_SHORT).show();
+                return;
+            }
             Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+            intent.putExtra("username", username);
             startActivity(intent);
         });
     }

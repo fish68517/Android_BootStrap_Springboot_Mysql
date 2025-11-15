@@ -5,6 +5,16 @@ public class CommentPostDTO {
     private Integer gameId;
     private String content;
 
+    private Integer userId;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     // Getters and Setters
     public Integer getGameId() {
         return gameId;

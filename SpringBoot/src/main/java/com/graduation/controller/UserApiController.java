@@ -40,6 +40,55 @@ public class UserApiController {
         return ResponseEntity.ok(user);
     }
 
+    // 删除用户
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> delete(@RequestParam Integer userId) {
+        userService.deleteUser(userId);
+        return ResponseEntity.noContent().build();
+    }
+
+    // 获取所有用户
+    @GetMapping("/list")
+    public ResponseEntity<List<Users>> getAllUsers() {
+        List<Users> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+
+    // 更新密码 password 允许为null ，nickName 允许为null
+
+    @PostMapping("/update")
+    public ResponseEntity<Users> update(
+            @RequestParam int userId,
+            @RequestParam String nickName,
+                                        @RequestParam String password) {
+        List<Users> user = userService.getAllUsers();
+        Users u = userService.getUserById(userId);
+        u.setNickname(nickName);
+        u.setPasswordHash(password);
+        userService.updateProfile(u.getUserId(), u);
+
+        return ResponseEntity.ok(u);
+    }
+
+    /*@POST("/api/user/update/password")
+    Call<User> updateProfilePassword(@Query("username") String username,@Query("password") String password);*/
+
+    @PostMapping("/update/password")
+    public ResponseEntity<Users> updateProfilePassword(@RequestParam String username,
+                                                       @RequestParam String password) {
+        List<Users> user = userService.getAllUsers();
+        for (Users u : user) {
+            if (u.getUsername().equals(username)) {
+                u.setPasswordHash(password);
+                userService.updateProfile(u.getUserId(), u);
+                return ResponseEntity.ok(u);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+
+
     /**
      * 用户注册 (API)
      *

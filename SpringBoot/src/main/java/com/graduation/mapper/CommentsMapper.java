@@ -1,5 +1,6 @@
 package com.graduation.mapper;
 
+import com.graduation.entity.CommentLikes;
 import com.graduation.entity.Comments;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -29,4 +30,13 @@ public interface CommentsMapper extends BaseMapper<Comments> {
      */
     @Select("SELECT * FROM comments WHERE status = 'pending' ORDER BY created_at ASC")
     List<Comments> selectPendingComments();
+
+
+    // 根据 gameId 获取所有评论
+    @Select("SELECT * FROM comments WHERE game_id = #{gameId}")
+    List<Comments> getCommentsByGameId(@Param("gameId") Integer gameId);
+
+    // 根据 userId 获取所有评论
+    @Select("SELECT * FROM comments WHERE user_id = #{userId}")
+    List<Comments> getCommentsByUserId(@Param("userId") Integer userId);
 }

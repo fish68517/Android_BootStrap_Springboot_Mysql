@@ -45,6 +45,16 @@ public class GameApiController {
             }
         }
 
+        if (!query.isEmpty()) {
+            Iterator<Games> iterator = games.iterator();
+            while (iterator.hasNext()) {
+                Games game = iterator.next();
+                if (!game.getTitle().contains(query)) {
+                    iterator.remove();
+                }
+            }
+        }
+
         return ResponseEntity.ok(games);
     }
 
