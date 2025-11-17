@@ -46,7 +46,7 @@ public interface ApiService {
      * @param registerDTO 包含注册信息
      */
     @POST("/api/user/register")
-    Call<Boolean> register(@Body UserRegisterDTO registerDTO);
+    Call<ApiResponse> register(@Body UserRegisterDTO registerDTO);
 
     @GET("/api/user/list")
     Call<List<User>> getAllUsers();

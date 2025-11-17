@@ -53,6 +53,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
             holder.tvCommentDate.setText(dateFormat.format(comment.getCreatedAt()));
         }
 
+
         // 绑定用户信息 (用户名和头像)
         int userId = comment.getUserId();
         List<User> users = MyApplication.users;
@@ -93,6 +94,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         TextView tvUsername;
         TextView tvCommentDate;
         TextView tvCommentContent;
+        TextView ivlike;
 
         public CommentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -100,6 +102,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
             tvUsername = itemView.findViewById(R.id.tv_user_nickname);
             tvCommentDate = itemView.findViewById(R.id.tv_comment_time);
             tvCommentContent = itemView.findViewById(R.id.tv_comment_content);
+            ivlike = itemView.findViewById(R.id.iv_like);
         }
     }
 }

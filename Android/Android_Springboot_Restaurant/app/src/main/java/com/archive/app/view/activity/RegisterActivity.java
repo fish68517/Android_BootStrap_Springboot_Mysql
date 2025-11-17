@@ -17,6 +17,7 @@ import com.archive.app.MyApplication;
 import com.archive.app.R;
 import com.archive.app.RetrofitClient;
 import com.archive.app.model.dto.UserRegisterDTO;
+import com.archive.app.model.response.ApiResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -82,10 +83,10 @@ public class RegisterActivity extends AppCompatActivity {
         UserRegisterDTO registerDTO = new UserRegisterDTO(username, password, confirmPassword, role);
 
         // 调用 API
-        apiService.register(registerDTO).enqueue(new Callback<Boolean>() {
+        apiService.register(registerDTO).enqueue(new Callback<ApiResponse>() {
             @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if (response.isSuccessful() && response.body() != null && response.body()) {
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                     // 注册成功
                     Toast.makeText(RegisterActivity.this, "注册成功！请登录。", Toast.LENGTH_SHORT).show();
                     finish(); // 关闭注册页，返回登录页
@@ -96,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
                 // 网络错误
                 Toast.makeText(RegisterActivity.this, "网络错误: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
