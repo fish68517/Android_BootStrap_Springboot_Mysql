@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:background="@null"
-            android:hint="请输入账号"
+            android:hint="请输入手机号"
             android:inputType="text"
             android:paddingVertical="16dp" />
         </LinearLayout>
