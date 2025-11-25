@@ -122,12 +122,9 @@ public class CommentApiController {
      *
      */
     @PostMapping("/like/{id}")
-    public ResponseEntity<ApiResponse> likeComment(@PathVariable("id") Integer commentId, HttpSession session) {
-        Users currentUser = (Users) session.getAttribute("currentUser");
-        if (currentUser == null) {
-            throw new UnauthorizedException("用户未登录");
-        }
-        commentService.likeComment(commentId, currentUser.getUserId());
+    public ResponseEntity<ApiResponse> likeComment(@PathVariable("id") Integer commentId,@RequestParam Integer userId) {
+
+        commentService.likeComment(commentId, userId);
         int likeCount = commentService.getLikeCount(commentId);
 
         return ResponseEntity.ok(ApiResponse.success("点赞成功").put("likeCount", likeCount));
@@ -138,14 +135,20 @@ public class CommentApiController {
      *
      */
     @PostMapping("/unlike/{id}")
-    public ResponseEntity<ApiResponse> unlikeComment(@PathVariable("id") Integer commentId, HttpSession session) {
-        Users currentUser = (Users) session.getAttribute("currentUser");
-        if (currentUser == null) {
-            throw new UnauthorizedException("用户未登录");
-        }
-        commentService.unlikeComment(commentId, currentUser.getUserId());
+    public ResponseEntity<ApiResponse> unlikeComment(@PathVariable("id") Integer commentId,@RequestParam Integer userId) {
+
+        commentService.unlikeComment(commentId, userId);
         int likeCount = commentService.getLikeCount(commentId);
 
         return ResponseEntity.ok(ApiResponse.success("取消点赞成功").put("likeCount", likeCount));
+    }
+
+    //// 获取 userId 和 commentId 的点赞状态
+    //    @GET("/api/comment/like/status/{userId}/{commentId}")
+    //    Call<Boolean> getLikeStatus(@Path("userId") int userId, @Path("commentId") int commentId);
+    @GetMapping("/like/status/{userId}/{commentId}")
+    public ResponseEntity<Boolean> getLikeStatus(@PathVariable("userId") Integer userId, @PathVariable("commentId") Integer commentId) {
+        boolean isLiked = commentService.isLikedByUser(commentId, userId);
+        return ResponseEntity.ok(isLiked);
     }
 }

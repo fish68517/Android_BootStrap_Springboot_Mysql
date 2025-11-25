@@ -204,9 +204,9 @@ public class RegisterActivity extends AppCompatActivity {
         RadioButton selectedRadioButton = findViewById(selectedRoleId);
         // "user" 或 "publisher"
         String role = "user";
-        if (selectedRadioButton.getId() == R.id.rb_publisher) {
+      /*  if (selectedRadioButton.getId() == R.id.rb_publisher) {
             role = "publisher";
-        }
+        }*/
 
         // 创建 DTO (假设您的DTO也需要phone字段)
         UserRegisterDTO registerDTO = new UserRegisterDTO(username, password, confirmPassword, role);

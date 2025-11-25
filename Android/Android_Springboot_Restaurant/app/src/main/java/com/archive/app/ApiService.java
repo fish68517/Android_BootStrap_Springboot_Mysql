@@ -211,12 +211,16 @@ public interface ApiService {
      * 点赞评论 (AJAX 接口)
      */
     @POST("/api/comment/like/{id}")
-    Call<LikeResponse> likeComment(@Path("id") int id);
+    Call<LikeResponse> likeComment(@Path("id") int id,@Query("userId") int userId);
 
     /**
      * 取消点赞评论 (AJAX 接口)
      */
     @POST("/api/comment/unlike/{id}")
-    Call<LikeResponse> unlikeComment(@Path("id") int id);
+    Call<LikeResponse> unlikeComment(@Path("id") int id,@Query("userId") int userId);
+
+    // 获取 userId 和 commentId 的点赞状态
+    @GET("/api/comment/like/status/{userId}/{commentId}")
+    Call<Boolean> getLikeStatus(@Path("userId") int userId, @Path("commentId") int commentId);
 
 }
